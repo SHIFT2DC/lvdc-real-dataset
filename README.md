@@ -2,18 +2,27 @@
 
 This repository contains real-world time-series measurements acquired from an operational low-voltage DC (LVDC) installation with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and are intended to support research on LVDC monitoring, event detection, and data-driven signal prioritisation.
 
-## Dataset summary
+## Dataset summary (current reference dataset)
+
+The following characteristics describe the main reference dataset currently used for analysis and methodological development in this repository.
 
 - System type: hybrid AC/DC and LVDC installation
-- Nominal DC bus voltage: 380 V (typical operating range around 370 to 400 V)
+- Nominal DC bus voltage: 380 V (typical operating range approximately 370–400 V)
 - Sampling interval: 1 s
-- Duration: up to 24 hours continuous recording (depending on the file)
-- Context: industrial partner measurements collected within SHIFT2DC related activities
+- Duration: up to 24 hours of continuous recording (depending on the file)
+- Acquisition context: industrial LVDC installation operated by a partner involved in the SHIFT2DC Horizon Europe project
+
+## Repository scope and extensibility
+
+While the repository currently focuses on a primary real-world LVDC dataset operating at a nominal DC bus voltage of 380 V, its structure and analysis methodology are designed to support additional datasets with different voltage levels, operating conditions, and system configurations.
+
+In particular, the repository is intended to accommodate other real-world LVDC datasets collected within the SHIFT2DC project, including installations operating at higher DC voltage levels (for example around 700 V), as well as potential datasets from external sources in the future.
+
 
 ## What is included
 
 - DC bus voltage measurements and related electrical variables
-- Optional signals depending on the file (for example power, current, and state indicators)
+- Optional signals depending on the file (for example power, current, and state indicators), as documented in the metadata.
 - Scripts for basic inspection, plotting, and event exploration
 
 ## Repository structure
