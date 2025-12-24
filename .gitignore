@@ -1,0 +1,25 @@
+# Python virtual env
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Env files
+.env
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Temporary outputs and debug plots
+scripts/out_plots/tmp/
+scripts/out_plots/debug/
+
+# Logs / temp
+*.log
+*.tmp
