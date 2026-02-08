@@ -1,8 +1,8 @@
 # A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritization
 
-This repository contains real-world time-series measurements acquired from operational low-voltage DC (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
+This repository contains real-world time-series measurements and auxiliary analysis resources related to operational low-voltage DC (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
 
-The datasets are being prepared in the context of a Data Descriptor manuscript and subsequent experimental validation activities related to the SHIFT2DC Horizon Europe project.
+The datasets are being prepared and curated in the context of a Data Descriptor manuscript and related experimental validation activities and subsequent experimental validation activities related to the SHIFT2DC Horizon Europe project.
 
 ## Dataset overview
 
@@ -42,6 +42,8 @@ The repository structure and analysis methodology are designed to support multip
 - Raw CSV files containing time-stamped electrical and system-level measurements  
 - Metadata files describing signal names, units, and acquisition context
 - Scripts for basic inspection, plotting, and exploratory analysis of voltage dynamics and events
+  
+Note: analysis scripts are provided in this GitHub repository for research and reproducibility purposes and are not part of the dataset archive released on Zenodo.
 
 ## Repository structure
 
@@ -76,7 +78,7 @@ A typical workflow is:
 
 ## Citation
 
-A Data Descriptor manuscript is currently under preparation. A DOI and formal citation will be added once the dataset collection is released through an approved public repository.
+A Data Descriptor manuscript is currently under preparation. A DOI has been reserved via Zenodo and will be formally registered upon publication of the dataset.
 
 ## License and access
 
