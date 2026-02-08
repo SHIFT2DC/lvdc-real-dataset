@@ -1,8 +1,8 @@
-# LVDC real-world datasets for event-driven monitoring and signal prioritisation
+# A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritization
 
-This repository contains real-world time-series measurements acquired from operational low-voltage DC (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and are intended to support research on LVDC monitoring, event detection, and data-driven signal prioritisation under realistic operating conditions.
+This repository contains real-world time-series measurements acquired from operational low-voltage DC (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
 
-The datasets collected in this repository are being prepared in the context of a Data Descriptor manuscript and subsequent experimental validation activities within the SHIFT2DC Horizon Europe project.
+The datasets are being prepared in the context of a Data Descriptor manuscript and subsequent experimental validation activities related to the SHIFT2DC Horizon Europe project.
 
 ## Dataset overview
 
@@ -16,10 +16,12 @@ The repository currently includes three curated reference datasets obtained unde
 - **LVDC_380V_hybrid_ACDC_battery_on_2024_05_10.csv**  
   Dataset acquired on 10 May 2024 from the same installation and DC bus voltage level, during a period when the battery system was operational and actively connected to the DC bus. This dataset represents a buffered operating regime and enables direct comparison with the unbuffered case.
 
+Together, these two datasets enable controlled comparison between unbuffered and buffered LVDC operation using measurements from the same installation and voltage level.
+
 ### Optional complementary dataset (700 V LVDC)
 
 - **LVDC_700V_AFE_2025_12_15.csv**  
-  Dataset acquired on 15 December 2025 from an industrial active front end (AFE) installation operating at approximately 700 V. This dataset focuses on a reduced set of electrical and system state variables and is included as a complementary reference representing a different LVDC voltage level and operational context.
+  Dataset acquired on 15 December 2025 from an industrial active front end (AFE) installation operating at a nominal DC bus voltage of approximately 700 V. This dataset focuses on a reduced set of electrical and system state variables and is included as a complementary reference representing a different LVDC voltage level and operational context.
 
 ## Dataset characteristics
 
@@ -28,17 +30,17 @@ Across the different datasets, the following general characteristics apply:
 - System type: hybrid AC/DC and LVDC installations  
 - DC bus voltage levels: 380 V and 700 V, depending on the dataset  
 - Sampling interval: approximately 1 s (0.5 s for the AFE-related dataset)  
-- Duration: from several minutes up to full-day continuous recordings  
+- Duration: from several minutes (AFE-related dataset) up to full-day continuous recordings (380 V installation datasets)
 - Acquisition context: industrial LVDC installations operated by partners involved in the SHIFT2DC project
 
 ## Repository scope and extensibility
 
-The repository structure and analysis methodology are designed to support multiple LVDC datasets with different voltage levels, operating conditions, and system configurations. While the current focus is on datasets collected within the SHIFT2DC project, the repository can be extended to include additional real-world LVDC datasets obtained under other operating regimes or longer observation periods.
+The repository structure and analysis methodology are designed to support multiple LVDC datasets with different voltage levels, operating conditions, and system configurations.
 
 ## What is included
 
 - Raw CSV files containing time-stamped electrical and system-level measurements  
-- Metadata files describing signal names, units, and acquisition context  
+- Metadata files describing signal names, units, and acquisition context
 - Scripts for basic inspection, plotting, and exploratory analysis of voltage dynamics and events
 
 ## Repository structure

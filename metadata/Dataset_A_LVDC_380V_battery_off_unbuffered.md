@@ -10,7 +10,7 @@ This dataset is intended to support research on LVDC monitoring, event detection
 
 ## Acquisition context
 
-Measurements were acquired from an industrial hybrid AC/DC installation operated by an industrial partner of the SHIFT2DC project. The system includes an AC grid connection, multiple AC and DC loads, and a DC distribution network regulated using droop control.
+Measurements were acquired from an industrial hybrid AC/DC installation operated by an industrial partner involved in the SHIFT2DC project. The system includes an AC grid connection, multiple AC and DC loads, and a DC distribution network regulated using droop control.
 
 The nominal DC bus voltage is 380 V, with typical operating values observed between approximately 370 V and 400 V. During the recording period, no active battery buffering was present, allowing natural voltage variations to appear in response to load dynamics.
 
@@ -31,9 +31,9 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | Column name | Description | Unit |
 |------------|------------|------|
 | Time | Timestamp of the measurement | – |
-| P_ges | Total active power of the installation | W |
-| LF_ges | Global load or power factor indicator reported by the system | – |
-| S_ges | Apparent power of the installation | VA |
+| P_ges | Total active power of the installation | W (as reported by the monitoring system) |
+| LF_ges | Indicator reported by the monitoring system (see notes in repository metadata) | – |
+| S_ges | Apparent power of the installation | VA (as reported by the monitoring system) |
 | I_L1 | AC phase L1 current | A |
 | I_L2 | AC phase L2 current | A |
 | I_L3 | AC phase L3 current | A |
@@ -45,13 +45,13 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | FQ_L2 | AC frequency measured on phase L2 | Hz |
 | FQ_L3 | AC frequency measured on phase L3 | Hz |
 | Diffstrom Status | Differential current status indicator reported by the system | – |
-| PV Carport Pges | Active power from PV carport installation | W |
-| PV Werkstatt Pges | Active power from PV workshop installation | W |
+| PV Carport Pges | Active power from PV carport installation | W (as reported by the monitoring system) |
+| PV Werkstatt Pges | Active power from PV workshop installation | W (as reported by the monitoring system) |
 | NRE DCbus U | DC bus voltage at the main LVDC node | V |
-| NRE K1 P1 | Power measurement of DC/DC converter branch K1 | W |
-| NRE K4 P1 | Power measurement of DC/DC converter branch K4 | W |
-| NRE K6 P1 | Power measurement of DC/DC converter branch K6 | W |
-| Nachladung P | Battery charging power reported by the system | W |
+| NRE K1 P1 | Power measurement of DC/DC converter branch K1 | W (as reported by the monitoring system) |
+| NRE K4 P1 | Power measurement of DC/DC converter branch K4 | W (as reported by the monitoring system) |
+| NRE K6 P1 | Power measurement of DC/DC converter branch K6 | W (as reported by the monitoring system) |
+| Nachladung P | Battery charging power reported by the system | W (as reported by the monitoring system) |
 | Nachladung I | Battery charging current reported by the system | A |
 | DC Status | DC system status indicator | – |
 | DC ISO R | DC insulation resistance | Ω |
