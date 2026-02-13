@@ -1,20 +1,28 @@
 cff-version: 1.2.0
 title: "A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritisation"
 version: 0.1.0
+type: dataset
 
 authors:
   - family-names: Arroyo-Valle
     given-names: Francisco J.
-    affiliation: CIRCE, Centre of Research for Energy Resources and Consumption, Zaragoza, Spain
+    affiliation: CIRCE, Centre of Research for Energy Resources and Consumption, Zaragoza 50018, Spain
+    email: fjarroyo@fcirce.es
+    orcid: https://orcid.org/0009-0005-8066-4644
+
+  - family-names: Drexler
+    given-names: Kilian
+    affiliation: Fraunhofer Institute for Integrated Systems and Device Technology (IISB), Erlangen, Germany
+    orcid: https://orcid.org/0000-0003-0522-8568
+
   - family-names: Roger
     given-names: Sandra
-    affiliation: Universitat de València, Valencia, Spain
+    affiliation: Computer Science Department, Universitat de València, Valencia 46010, Spain
+    orcid: https://orcid.org/0000-0003-4808-252X
+
   - family-names: Saldana
     given-names: Jose
-    affiliation: CIRCE, Centre of Research for Energy Resources and Consumption, Zaragoza, Spain
-  # - family-names: Drexler
-  #   given-names: Kilian
-  #   affiliation: (to be confirmed)
-  #   note: Additional contributors and data providers will be added prior to public release, subject to agreement with the data owners.
+    affiliation: CIRCE, Centre of Research for Energy Resources and Consumption, Zaragoza 50018, Spain
+    orcid: https://orcid.org/0000-0002-6977-6363
 
-license: "To be defined (likely CC-BY-4.0)"
+license: CC-BY-4.0
