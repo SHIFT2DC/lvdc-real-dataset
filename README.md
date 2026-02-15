@@ -2,7 +2,7 @@
 
 This repository contains real-world time-series measurements and auxiliary analysis resources related to operational low-voltage DC (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
 
-The datasets are being prepared and curated in the context of a Data Descriptor manuscript and related experimental validation activities and subsequent experimental validation activities related to the SHIFT2DC Horizon Europe project.
+The datasets are being prepared and curated in the context of a Data Descriptor manuscript and related validation activities within the SHIFT2DC Horizon Europe project.
 
 ## Dataset overview
 
@@ -34,6 +34,21 @@ Across the different datasets, the following general characteristics apply:
 - Sampling interval: approximately 1 s (0.5 s for the AFE-related dataset)  
 - Duration: from several minutes (AFE-related dataset) up to full-day continuous recordings (380 V installation datasets)
 - Acquisition context: industrial LVDC installations operated by partners involved in the SHIFT2DC project
+
+### Data integrity notes and logging characteristics
+
+The following observations were identified during reproducible validation of the raw datasets:
+
+- **Dataset A (380 V, battery-off)**  
+  No duplicated or invalid timestamps were detected. Approximately 30.9% of consecutive DC bus voltage samples are identical, reflecting steady-state operation and measurement quantization effects rather than data corruption.
+
+- **Dataset B (380 V, battery-on)**  
+  A total of 1,440 duplicated timestamps (1.67% of samples) were observed. These duplicates occur systematically once per minute at a fixed second offset (second 54) and are attributed to the logging mechanism. The overall temporal sequence remains monotonic and physically consistent.
+
+- **Dataset C (700 V AFE)**  
+  The original partner log includes structural markers and a field-order switch after reconnection events. A reproducible preprocessing script (`scripts/preprocess/01_fix_dataset_C_alignment.py`) is provided to restore column consistency prior to analysis. No duplicated timestamps were detected after alignment. A high proportion of identical consecutive samples reflects extended steady-state intervals typical of industrial operation.
+
+All validation results are reproducible using the scripts under `scripts/validation/`.
 
 ## Repository scope and extensibility
 
