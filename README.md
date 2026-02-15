@@ -22,6 +22,8 @@ Together, these two datasets enable controlled comparison between unbuffered and
 
 - **LVDC_700V_AFE_2025_12_15.csv**  
   Dataset acquired on 15 December 2025 from an industrial active front end (AFE) installation operating at a nominal DC bus voltage of approximately 700 V. This dataset focuses on a reduced set of electrical and system state variables and is included as a complementary reference representing a different LVDC voltage level and operational context.
+  The industrial partner initially provided two CSV files covering consecutive time segments. The second file already contains the complete continuous time series required for analysis. Therefore, only this file is used to generate the raw dataset stored under data/raw/.
+  The original partner-provided files are preserved under data/original_from_partners/ for traceability. The validation and analysis pipeline operates exclusively on the selected consolidated dataset.
 
 ## Dataset characteristics
 
