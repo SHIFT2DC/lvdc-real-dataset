@@ -104,7 +104,7 @@ datasets:
 
   C:
     description: "LVDC 700 V AFE dataset (optional)"
-    csv_path: "data/raw/LVDC_700V_AFE_2025_12_15.csv"
+    csv_path: "data/processed/LVDC_700V_AFE_2025_12_15_aligned.csv"
     time_col: "Timestamp"
     time_format: "%Y-%m-%d %H:%M:%S.%f"
     vbus_col: "upstreamvoltage"

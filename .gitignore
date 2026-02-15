@@ -23,3 +23,7 @@ scripts/out_plots/debug/
 # Logs / temp
 *.log
 *.tmp
+
+# Ignore generated validation and preprocessing outputs (reproducible artifacts)
+out/*
+!out/.gitkeep
