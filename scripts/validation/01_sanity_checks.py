@@ -40,11 +40,11 @@ What it checks
 
 Outputs
 -------
-out/<dataset_id>/<run_id>/stats/
+out/<dataset_id>/<run_id>/sanity/stats/
   sanity_summary.csv
   missingness.csv
   timestamp_checks.json
-out/<dataset_id>/<run_id>/
+out/<dataset_id>/<run_id>/sanity/
   params.json
 
 Notes
@@ -163,12 +163,17 @@ def main() -> int:
         rid = utc_timestamp_compact() + "_" + short_hash_from_params(params, length=6)
     else:
         rid = args.run_id
+    # Add run metadata for traceability (consistent with other validation stages)
+    params["run_id"] = rid
+    params["created_utc"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    params["stage"] = "sanity"
 
     out_dir = os.path.join(args.out_root, args.dataset_id, rid)
-    stats_dir = os.path.join(out_dir, "stats")
+    #stats_dir = os.path.join(out_dir, "stats")
+    stats_dir = os.path.join(out_dir, "sanity", "stats")
     ensure_dir(stats_dir)
 
-    save_params_json(params, os.path.join(out_dir, "params.json"))
+    save_params_json(params, os.path.join(out_dir, "sanity", "params.json"))
 
     df = read_csv_safe(csv_path, encoding=args.encoding)
     n_rows_raw = int(df.shape[0])

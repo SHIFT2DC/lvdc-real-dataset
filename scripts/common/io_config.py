@@ -36,9 +36,11 @@ from __future__ import annotations
 
 import os
 from typing import Dict, Any, List, Optional
-
 import pandas as pd
 import yaml
+import json
+import subprocess
+from datetime import datetime, timezone
 
 
 def load_dataset_config(dataset_id: str, config_path: str = "configs/datasets.yaml") -> Dict[str, Any]:
@@ -206,3 +208,37 @@ def load_csv(
 
     df = df.sort_values(time_col).reset_index(drop=True)
     return df
+def ensure_dir(path: str) -> None:
+    """Create a directory if it does not exist."""
+    os.makedirs(path, exist_ok=True)
+
+
+def write_json(path: str, obj: Dict[str, Any]) -> None:
+    """Write a JSON file with stable formatting for reproducibility."""
+    ensure_dir(os.path.dirname(path) or ".")
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, indent=2, sort_keys=True)
+
+
+def _git_short_sha(default: str = "nogit") -> str:
+    """Return the current git short SHA (if available)."""
+    try:
+        out = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.DEVNULL)
+        return out.decode("utf-8").strip()
+    except Exception:
+        return default
+
+
+def make_run_id() -> str:
+    """
+    Build a reproducible run identifier.
+
+    Format:
+      YYYY-MM-DD_HHMMZ_<gitsha>
+
+    Example:
+      2026-02-16_2015Z_d734ec
+    """
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%MZ")
+    sha = _git_short_sha()
+    return f"{ts}_{sha}"
