@@ -54,6 +54,70 @@ All validation results are reproducible using the scripts under `scripts/validat
 
 The repository structure and analysis methodology are designed to support multiple LVDC datasets with different voltage levels, operating conditions, and system configurations.
 
+## Reporting and Paper-Ready Figures
+
+This repository includes reproducible scripts to generate publication-ready figures
+based on the empirical distribution of |dV/dt| across datasets.
+
+### Figure 1 — Stacked CCDF of |dV/dt|
+
+The recommended figure for the manuscript is the stacked complementary cumulative
+distribution function (CCDF) of |dV/dt|, including extreme-tail percentile markers
+(p99.9 and p99.95).
+
+Run from repository root:
+
+```bash
+python3 -m scripts.reporting.01_plot_dvdt_distribution \
+    --datasets A B C \
+    --mode ccdf \
+    --log-y \
+    --font-size 11 \
+    --title-font-delta 2 \
+    --tick-font-delta -1 \
+    --line-width 1.4 \
+    --marker-line-width 1.6 \
+    --legend \
+    --legend-font-delta -1 \
+    --legend-bbox 0.5,-0.01
+```
+This produces:
+* One subplot per dataset (stacked layout)
+* Log-scale on the y-axis
+* Percentile thresholds (p99.9 and p99.95)
+* Vector outputs (SVG and PDF) suitable for journal submission
+
+Outputs are written to:
+```console
+out/reporting/<run_id>/figures/
+```
+### Alternative View — Histogram (Density)
+
+A stacked histogram representation can also be generated:
+
+```bash
+python3 -m scripts.reporting.01_plot_dvdt_distribution \
+    --datasets A B C \
+    --mode hist \
+    --log-y \
+    --bins 200 \
+    --font-size 11 \
+    --title-font-delta 2 \
+    --tick-font-delta -1 \
+    --line-width 1.4 \
+    --marker-line-width 1.6 \
+    --legend \
+    --legend-font-delta -1 \
+    --legend-bbox 0.5,-0.01
+```
+This view is primarily intended for exploratory analysis or supplementary material.
+
+### Design Rationale
+* CCDF is preferred for manuscript presentation as it highlights extreme-tail behaviour.
+* Percentile-based thresholds (p99.9, p99.95) are used for event detection.
+* Typography and layout parameters are fully controllable via CLI arguments.
+* Figures are generated in vector format to ensure reproducibility and publication quality.
+
 ## What is included
 
 - Raw CSV files containing time-stamped electrical and system-level measurements  
