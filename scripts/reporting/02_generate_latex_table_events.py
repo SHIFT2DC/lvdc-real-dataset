@@ -190,8 +190,8 @@ def main() -> None:
     parser.add_argument(
         "--label",
         type=str,
-        default=None,
-        help="Optional LaTeX label (e.g., tab:dvdt-events). If omitted, no label is added.",
+        default="tab:dvdt_events",
+        help="LaTeX label for referencing the table."
     )
 
     args = parser.parse_args()
@@ -243,9 +243,7 @@ def main() -> None:
     latex_lines.append(r"\begin{table}[t]")
     latex_lines.append(r"\centering")
     latex_lines.append(rf"\caption{{{args.caption}}}")
-
-    if args.label:
-        latex_lines.append(rf"\label{{{args.label}}}")
+    latex_lines.append(rf"\label{{{args.label}}}")
 
     latex_lines.append(r"\begin{tabular}{lccccc}")
     latex_lines.append(r"\toprule")
