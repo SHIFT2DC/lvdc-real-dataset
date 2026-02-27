@@ -6,7 +6,7 @@ datasets:
     time_col: "Time"
     time_format: "%Y-%m-%d %H:%M:%S"
     vbus_col: "NRE DCbus U"
-    power_col: "P_ges"
+    power_col: "NRE K1 P1"
     columns:
       - "P_ges"
       - "LF_ges"
@@ -58,6 +58,7 @@ datasets:
     time_col: "Time"
     time_format: "%Y-%m-%d %H:%M:%S"
     vbus_col: "NRE DCbus U"
+    power_col: "NRE K1 P1"
     columns:
       - "P_ges"
       - "LF_ges"
