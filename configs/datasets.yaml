@@ -6,6 +6,7 @@ datasets:
     time_col: "Time"
     time_format: "%Y-%m-%d %H:%M:%S"
     vbus_col: "NRE DCbus U"
+    power_col: "P_ges"
     columns:
       - "P_ges"
       - "LF_ges"
@@ -108,6 +109,7 @@ datasets:
     time_col: "Timestamp"
     time_format: "%Y-%m-%d %H:%M:%S.%f"
     vbus_col: "upstreamvoltage"
+    power_col: "poweroutput"
     columns:
       - "temperature"
       - "systemstate"
