@@ -26,7 +26,7 @@ Usage examples (run from repository root)
 -----------------------------------------
 Stacked CCDF (recommended for the paper), log-y, with percentile legend:
     python3 -m scripts.reporting.01_plot_dvdt_distribution \
-        --datasets A B C \
+        --datasets A B \
         --mode ccdf \
         --log-y \
         --font-size 11 \
@@ -40,7 +40,7 @@ Stacked CCDF (recommended for the paper), log-y, with percentile legend:
 
 Stacked histogram (density), log-y, with percentile legend:
     python3 -m scripts.reporting.01_plot_dvdt_distribution \
-        --datasets A B C \
+        --datasets A B \
         --mode hist \
         --log-y \
         --bins 200 \
@@ -286,6 +286,12 @@ def main() -> None:
         "B": {"color": "#D55E00", "label": "Dataset B"},
         "C": {"color": "#009E73", "label": "Dataset C"},
     }
+    # Compact subplot titles for paper-ready figures
+    panel_title = {
+        "A": "(a) battery OFF",
+        "B": "(b) battery ON",
+        "C": "(c) complementary",
+    }
     # Percentile marker styling (fixed colors for reproducibility)
     percentile_style = {
         99.9: {"color": "#CC79A7", "label": "p99.9"},
@@ -346,7 +352,7 @@ def main() -> None:
                 linewidth=1.0,
                 color=style_ds.get("color", None),
             )
-            ax.set_ylabel("Density", fontsize=int(args.font_size))
+            ax.set_ylabel("Density", fontsize=int(args.font_size) + 1)
 
 
         else:
@@ -358,7 +364,7 @@ def main() -> None:
                 linewidth=1.0,
                 color=style_ds.get("color", None),
             )
-            ax.set_ylabel("P(|dV/dt| ≥ x)", fontsize=int(args.font_size))
+            ax.set_ylabel("P(|dV/dt| ≥ x)", fontsize=int(args.font_size) + 1)
 
         # Percentile markers (p99.9 and p99.95) with distinct colors
         for p in percentiles_to_mark:
@@ -384,18 +390,48 @@ def main() -> None:
                 label=style_p.get("label", f"p{p}") if args.legend else None,
             )
 
-        ax.set_title(f"Dataset {dataset_id}", fontsize=int(args.font_size) + 2)
+        # Compact panel label inside each subplot (paper-style)
+        ax.text(
+            0.08,
+            0.96,
+            panel_title.get(dataset_id, dataset_id),
+            transform=ax.transAxes,
+            ha="left",
+            va="top",
+            fontsize=int(args.font_size) + int(args.title_font_delta) - 1,
+        )
         # Tick label size slightly smaller than axis labels
-        tick_fs = int(args.font_size) - 1
+        tick_fs = int(args.font_size) + int(args.tick_font_delta)
         ax.tick_params(axis="both", labelsize=tick_fs)
 
         if args.log_y:
             ax.set_yscale("log")
 
-    axes[-1].set_xlabel("|dV/dt| (V/s)",fontsize=int(args.font_size))
+    axes[-1].set_xlabel("|dV/dt| (V/s)", fontsize=int(args.font_size) + 1)
     axes[-1].set_xlim(left=0.0, right=x_max)
 
-    fig.tight_layout()
+    # Global figure title
+    if args.mode == "ccdf":
+        fig.text(
+            0.5,
+            0.925,
+            "Empirical |dV/dt| tail distribution",
+            ha="center",
+            va="bottom",
+            fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
+        )
+    else:
+        fig.text(
+            0.5,
+            0.925,
+            "Empirical |dV/dt| distribution",
+            ha="center",
+            va="bottom",
+            fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
+        )
+
+    fig.tight_layout(rect=(0.0, 0.02, 1.0, 0.90))
+    fig.subplots_adjust(hspace=0.16)
 
     if args.legend:
         handles, labels = [], []
@@ -432,7 +468,7 @@ def main() -> None:
                 bbox_to_anchor=bbox,
                 ncol=len(uniq_labels),
                 frameon=False,
-                fontsize=int(args.font_size) - 1,
+                fontsize=int(args.font_size) + 1,
             )
 
     # -------------------------------------------------------------------------

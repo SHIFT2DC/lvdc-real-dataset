@@ -7,6 +7,15 @@ datasets:
     time_format: "%Y-%m-%d %H:%M:%S"
     vbus_col: "NRE DCbus U"
     power_col: "NRE K1 P1"
+    power_cols_candidates:
+      - "NRE K1 P1"
+      - "NRE K4 P1"
+      - "NRE K6 P1"
+    power_cols_sum:
+      - "NRE K1 P1"
+      - "NRE K4 P1"
+      - "NRE K6 P1"
+    power_sum_name: "NRE_sum"
     columns:
       - "P_ges"
       - "LF_ges"
@@ -59,6 +68,15 @@ datasets:
     time_format: "%Y-%m-%d %H:%M:%S"
     vbus_col: "NRE DCbus U"
     power_col: "NRE K1 P1"
+    power_cols_candidates:
+      - "NRE K1 P1"
+      - "NRE K4 P1"
+      - "NRE K6 P1"
+    power_cols_sum:
+      - "NRE K1 P1"
+      - "NRE K4 P1"
+      - "NRE K6 P1"
+    power_sum_name: "NRE_sum"
     columns:
       - "P_ges"
       - "LF_ges"

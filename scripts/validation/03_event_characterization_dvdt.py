@@ -111,6 +111,16 @@ class EventRecord:
     v_max: float
     delta_v_end_start: float
     delta_v_peak_to_peak: float
+    best_power_col: str
+    best_power_abs_deltaP: float
+    deltaP_NRE_K1_P1: float
+    abs_deltaP_NRE_K1_P1: float
+    deltaP_NRE_K4_P1: float
+    abs_deltaP_NRE_K4_P1: float
+    deltaP_NRE_K6_P1: float
+    abs_deltaP_NRE_K6_P1: float
+    deltaP_NRE_sum: float
+    abs_deltaP_NRE_sum: float
 
 
 def parse_args() -> argparse.Namespace:
@@ -198,6 +208,7 @@ def build_event_records(
     dvdt: np.ndarray,
     segments: List[Tuple[int, int]],
     min_event_samples: int,
+    df_power: Optional[pd.DataFrame] = None,
 ) -> List[EventRecord]:
     """
     Build event records from dvdt segments.
@@ -237,6 +248,63 @@ def build_event_records(
         v_end = float(v.iloc[end_idx])
         v_min = float(v_slice.min())
         v_max = float(v_slice.max())
+        
+                # ------------------------------------------------------------
+        # Power-branch characterization for this event
+        # ------------------------------------------------------------
+        # We compute delta P for each candidate branch and for the optional sum.
+        # The "best" branch is the one with the largest absolute delta P.
+        deltaP_NRE_K1_P1 = float("nan")
+        abs_deltaP_NRE_K1_P1 = float("nan")
+        deltaP_NRE_K4_P1 = float("nan")
+        abs_deltaP_NRE_K4_P1 = float("nan")
+        deltaP_NRE_K6_P1 = float("nan")
+        abs_deltaP_NRE_K6_P1 = float("nan")
+        deltaP_NRE_sum = float("nan")
+        abs_deltaP_NRE_sum = float("nan")
+
+        best_power_col = ""
+        best_power_abs_deltaP = float("nan")
+
+        if df_power is not None:
+            abs_dp_map: Dict[str, float] = {}
+
+            # K1
+            if "NRE K1 P1" in df_power.columns:
+                p0 = float(df_power.iloc[start_idx]["NRE K1 P1"])
+                p1 = float(df_power.iloc[end_idx]["NRE K1 P1"])
+                deltaP_NRE_K1_P1 = p1 - p0
+                abs_deltaP_NRE_K1_P1 = abs(deltaP_NRE_K1_P1)
+                abs_dp_map["NRE K1 P1"] = abs_deltaP_NRE_K1_P1
+
+            # K4
+            if "NRE K4 P1" in df_power.columns:
+                p0 = float(df_power.iloc[start_idx]["NRE K4 P1"])
+                p1 = float(df_power.iloc[end_idx]["NRE K4 P1"])
+                deltaP_NRE_K4_P1 = p1 - p0
+                abs_deltaP_NRE_K4_P1 = abs(deltaP_NRE_K4_P1)
+                abs_dp_map["NRE K4 P1"] = abs_deltaP_NRE_K4_P1
+
+            # K6
+            if "NRE K6 P1" in df_power.columns:
+                p0 = float(df_power.iloc[start_idx]["NRE K6 P1"])
+                p1 = float(df_power.iloc[end_idx]["NRE K6 P1"])
+                deltaP_NRE_K6_P1 = p1 - p0
+                abs_deltaP_NRE_K6_P1 = abs(deltaP_NRE_K6_P1)
+                abs_dp_map["NRE K6 P1"] = abs_deltaP_NRE_K6_P1
+
+            # Sum of branches
+            sum_cols = ["NRE K1 P1", "NRE K4 P1", "NRE K6 P1"]
+            if all(col in df_power.columns for col in sum_cols):
+                p0 = float(df_power.iloc[start_idx][sum_cols].sum())
+                p1 = float(df_power.iloc[end_idx][sum_cols].sum())
+                deltaP_NRE_sum = p1 - p0
+                abs_deltaP_NRE_sum = abs(deltaP_NRE_sum)
+                abs_dp_map["NRE_sum"] = abs_deltaP_NRE_sum
+
+            if abs_dp_map:
+                best_power_col = max(abs_dp_map.items(), key=lambda kv: kv[1])[0]
+                best_power_abs_deltaP = float(abs_dp_map[best_power_col])
 
         rec = EventRecord(
             event_id=event_id,
@@ -252,6 +320,16 @@ def build_event_records(
             v_max=v_max,
             delta_v_end_start=float(v_end - v_start),
             delta_v_peak_to_peak=float(v_max - v_min),
+            best_power_col=best_power_col,
+            best_power_abs_deltaP=best_power_abs_deltaP,
+            deltaP_NRE_K1_P1=deltaP_NRE_K1_P1,
+            abs_deltaP_NRE_K1_P1=abs_deltaP_NRE_K1_P1,
+            deltaP_NRE_K4_P1=deltaP_NRE_K4_P1,
+            abs_deltaP_NRE_K4_P1=abs_deltaP_NRE_K4_P1,
+            deltaP_NRE_K6_P1=deltaP_NRE_K6_P1,
+            abs_deltaP_NRE_K6_P1=abs_deltaP_NRE_K6_P1,
+            deltaP_NRE_sum=deltaP_NRE_sum,
+            abs_deltaP_NRE_sum=abs_deltaP_NRE_sum,
         )
         records.append(rec)
         event_id += 1
@@ -311,17 +389,37 @@ def main() -> None:
     }
     write_json(os.path.join(stage_dir, "params.json"), params)
 
-    # Load only required columns for speed
-    df = load_csv(cfg, usecols=[time_col, vbus_col], drop_invalid_timestamps=True)
+    # Load voltage plus candidate power branches (if available in config)
+    power_cols_candidates = cfg.get("power_cols_candidates", [])
+    power_cols_sum = cfg.get("power_cols_sum", [])
 
-    # Parse timestamps
+    usecols = [time_col, vbus_col]
+    for col in power_cols_candidates:
+        if col not in usecols:
+            usecols.append(col)
+    for col in power_cols_sum:
+        if col not in usecols:
+            usecols.append(col)
+
+    df = load_csv(cfg, usecols=usecols, drop_invalid_timestamps=True)
+
+    # Parse timestamps and main voltage
     t = df[time_col]
     v = pd.to_numeric(df[vbus_col], errors="coerce")
+
+    # Candidate power dataframe (may contain NaN if some branch is unavailable)
+    power_cols_present = [c for c in usecols if c not in [time_col, vbus_col]]
+    df_power = df[power_cols_present].copy() if power_cols_present else None
 
     # Drop rows with invalid time or voltage
     valid_rows = t.notna() & v.notna()
     t = t.loc[valid_rows].reset_index(drop=True)
     v = v.loc[valid_rows].reset_index(drop=True)
+    df = df.loc[valid_rows].reset_index(drop=True)
+
+    if df_power is not None:
+        df_power = df_power.loc[valid_rows].reset_index(drop=True)
+    
     # Recording duration (seconds and hours), used to normalize event rates
     if len(t) > 1:
         recording_duration_s = float((t.iloc[-1] - t.iloc[0]).total_seconds())
@@ -373,7 +471,7 @@ def main() -> None:
 
         mask = (dvdt_abs >= thr_vps) & (~np.isnan(dvdt_abs))
         segments = contiguous_true_segments(mask)
-        events = build_event_records(t, v, dvdt, segments, min_event_samples=args.min_event_samples)
+        events = build_event_records(t, v, dvdt, segments, min_event_samples=args.min_event_samples, df_power=df_power)
 
         samples_in_event = int(np.sum(mask))
         samples_pct = float(100.0 * samples_in_event / mask.size) if mask.size else 0.0
@@ -405,7 +503,7 @@ def main() -> None:
 
     mask_main = (dvdt_abs >= thr_main) & (~np.isnan(dvdt_abs))
     segments_main = contiguous_true_segments(mask_main)
-    events_main = build_event_records(t, v, dvdt, segments_main, min_event_samples=args.min_event_samples)
+    events_main = build_event_records(t, v, dvdt, segments_main, min_event_samples=args.min_event_samples, df_power=df_power)
 
     # Sort by peak |dV/dt|
     events_sorted = sorted(events_main, key=lambda e: e.peak_abs_dvdt, reverse=True)
