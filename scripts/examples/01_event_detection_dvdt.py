@@ -1,5 +1,5 @@
 """
-05_event_detection_dvdt.py
+01_event_detection_dvdt.py
 
 Minimal transient event detection and visualization example based on |dV/dt|
 (Scientific Data - Usage Example / Functional Validation)
@@ -59,7 +59,7 @@ Recommended main example (includes power trace)
 -----------------------------------------------
 
 # Dataset A (battery-off)
-python3 -m scripts.examples.05_event_detection_dvdt \
+python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id A \
     --percentile 99.9 \
     --window-s 10 \
@@ -68,7 +68,7 @@ python3 -m scripts.examples.05_event_detection_dvdt \
     --plot
 
 # Dataset B (battery-on)
-python3 -m scripts.examples.05_event_detection_dvdt \
+python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id B \
     --percentile 99.9 \
     --window-s 10 \
@@ -77,7 +77,7 @@ python3 -m scripts.examples.05_event_detection_dvdt \
     --plot
 
 # Dataset C (700 V AFE)
-python3 -m scripts.examples.05_event_detection_dvdt \
+python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id C \
     --percentile 99.9 \
     --window-s 10 \
@@ -89,7 +89,7 @@ Additional examples
 -------------------
 
 # Custom plot styling
-python3 -m scripts.examples.05_event_detection_dvdt \
+python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id A \
     --percentile 99.9 \
     --window-s 10 \
@@ -101,7 +101,7 @@ python3 -m scripts.examples.05_event_detection_dvdt \
     --line-width 1.4
 
 # Use automatic power column from YAML (if defined)
-python3 -m scripts.examples.05_event_detection_dvdt \
+python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id A \
     --percentile 99.9 \
     --window-s 10 \
@@ -109,7 +109,7 @@ python3 -m scripts.examples.05_event_detection_dvdt \
     --plot
 
 # Fixed run id (useful for run_all reproducibility)
-python3 -m scripts.examples.05_event_detection_dvdt \
+python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id A \
     --percentile 99.9 \
     --window-s 10 \
