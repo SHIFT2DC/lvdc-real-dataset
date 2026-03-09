@@ -196,7 +196,7 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    reporting_run_id = utc_timestamp_compact()
+    reporting_run_id = args.run_id if args.run_id else utc_timestamp_compact()
     out_dir = os.path.join(args.reporting_out_root, reporting_run_id, "tables")
     ensure_dir(out_dir)
 
