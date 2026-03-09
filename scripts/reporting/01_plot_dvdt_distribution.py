@@ -27,6 +27,7 @@ Usage examples (run from repository root)
 Stacked CCDF (recommended for the paper), log-y, with percentile legend:
     python3 -m scripts.reporting.01_plot_dvdt_distribution \
         --datasets A B \
+        --run-id 2026-03-09_1200Z_abcdef1 \
         --mode ccdf \
         --log-y \
         --font-size 11 \
@@ -41,6 +42,7 @@ Stacked CCDF (recommended for the paper), log-y, with percentile legend:
 Stacked histogram (density), log-y, with percentile legend:
     python3 -m scripts.reporting.01_plot_dvdt_distribution \
         --datasets A B \
+        --run-id 2026-03-09_1200Z_abcdef1 \
         --mode hist \
         --log-y \
         --bins 200 \
@@ -265,11 +267,14 @@ def main() -> None:
 
     parser.add_argument("--legend-font-delta", type=int, default=-1,
                         help="Legend fontsize = font_size + delta")
+    
+    parser.add_argument( "--run-id", default=None,
+                        help="Optional reporting run id. If omitted, one is generated.")
 
     args = parser.parse_args()
 
     # Output folder (one run folder for all datasets plotted together)
-    run_id = utc_timestamp_compact()
+    run_id = args.run_id if args.run_id else utc_timestamp_compact()
     out_dir = os.path.join("out", "reporting", run_id, "figures")
     ensure_dir(out_dir)
 
