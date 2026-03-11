@@ -473,16 +473,15 @@ def _build_latex_table(
     The full machine-readable content stays in validation_summary.csv.
     """
     lines: List[str] = []
-    lines.append("\\begin{table*}[t]")
+    lines.append("\\begin{table}[htbp]")
     lines.append("\\centering")
+    lines.append("\\small")
+    lines.append("\\setlength{\\tabcolsep}{4pt}")
     lines.append(f"\\caption{{{caption}}}")
     lines.append(f"\\label{{{label}}}")
     lines.append("\\begin{tabular}{lcccccc}")
     lines.append("\\toprule")
-    lines.append(
-        "Dataset & Duration (h) & Rows used & |dV/dt| p99 & "
-        "$\\rho$(Vbus,P) main & Sign ratio main & Main power \\\\"
-    )
+    lines.append("Dataset & Duration (h) & Rows & $|dV/dt|$ p99 & $\\rho_s$(Vbus,P) & CSR & Main power \\\\")
     lines.append("\\midrule")
 
     for _, row in df.iterrows():
@@ -501,7 +500,7 @@ def _build_latex_table(
 
     lines.append("\\bottomrule")
     lines.append("\\end{tabular}")
-    lines.append("\\end{table*}")
+    lines.append("\\end{table}")
     lines.append("")
 
     return "\n".join(lines)
