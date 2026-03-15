@@ -137,6 +137,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 from matplotlib.ticker import StrMethodFormatter
+import matplotlib.dates as mdates
 
 from scripts.common.io_config import (
     ensure_dir,
@@ -223,6 +224,11 @@ def _resolve_related_signal_columns(
 
     return []
 
+POWER_LABELS = {
+    "NRE K1 P1": "NRE K1 P1 (W)",
+    "NRE K4 P1": "NRE K4 P1 (W)",
+    "NRE K6 P1": "NRE K6 P1 (W)",
+}
 
 def _plot_event_window(
     out_dir: str,
@@ -234,6 +240,7 @@ def _plot_event_window(
     peak_abs_dvdt: float,
     window_start: pd.Timestamp,
     window_end: pd.Timestamp,
+    dataset_id: str,
     args: argparse.Namespace,
 ):
     """
@@ -249,7 +256,7 @@ def _plot_event_window(
     tick_fs = base_fs + args.tick_font_delta  # e.g. base 11 + (-1) = 10
 
     # Axis labels (Time, NRE DCbus U, etc.)
-    label_fs = tick_fs + 2.0  # 2 pt larger than ticks
+    label_fs = tick_fs + 3.0  # 2 pt larger than ticks
 
     # Title
     title_fs = label_fs + 2.0  # slightly larger than axis labels
@@ -281,7 +288,8 @@ def _plot_event_window(
     ax0 = axes[0]
     ax0.plot(t, df_win[vbus_col], linewidth=float(args.line_width), color=vbus_color)
     ax0.axvline(peak_time, linestyle="--", linewidth=1.0, color=marker_color)
-    ax0.set_ylabel(vbus_col, fontsize=label_fs)
+    #ax0.set_ylabel(vbus_col, fontsize=label_fs)
+    ax0.set_ylabel(f"{vbus_col} (V)", fontsize=label_fs)
     ax0.tick_params(axis="both", labelsize=tick_fs)
     ax0.grid(True, alpha=0.25)
     ax0.set_xlim(window_start, window_end)
@@ -303,30 +311,39 @@ def _plot_event_window(
     # ------------------------------------------------------------
     for i, col in enumerate(related_cols_present, start=1):
         ax = axes[i]
+        plot_label = POWER_LABELS.get(col, col)
         ax.plot(t, df_win[col], linewidth=float(args.line_width), color=power_color)
         ax.axvline(peak_time, linestyle="--", linewidth=1.0, color=marker_color)
-        ax.set_ylabel(col, fontsize=label_fs)
+        ax.set_ylabel(plot_label, fontsize=label_fs)
         ax.tick_params(axis="both", labelsize=tick_fs)
         ax.grid(True, alpha=0.25)
         ax.set_xlim(window_start, window_end)
         ax.yaxis.set_major_formatter(StrMethodFormatter("{x:.0f}"))
 
     axes[-1].set_xlabel("Time", fontsize=label_fs + 2.0)
-    # Rotate x tick labels for better readability
+
+    # Rotate x tick labels and increase size
     for ax in axes:
-        ax.tick_params(axis="x", labelrotation=30)
+        ax.tick_params(axis="x", labelrotation=30, labelsize=tick_fs + 2)
+
+    # Format time axis
+    axes[-1].xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
 
     # Align y-labels across panels
     fig.align_ylabels(axes)
 
-    fig.suptitle("Representative |dV/dt| event window", fontsize=title_fs, y=0.96)  # slightly lower than default
+    fig.suptitle(
+        f"Representative LVDC voltage transient event ({dataset_id})",
+        fontsize=title_fs,
+        y=0.96,
+    )
 
     # Reduce extra whitespace while keeping room for title
     fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.97))
 
     formats = [f.strip().lower() for f in str(args.plot_formats).split(",") if f.strip()]
     for fmt in formats:
-        fig_path = os.path.join(out_dir, f"event_window.{fmt}")
+        fig_path = os.path.join(out_dir, f"event_window_{dataset_id}.{fmt}")
         fig.savefig(fig_path, bbox_inches="tight")
 
     plt.close(fig)
@@ -535,6 +552,7 @@ def main():
             peak_abs_dvdt=float(max_peak),
             window_start=window_start,
             window_end=window_end,
+            dataset_id=args.dataset_id,
             args=args,
         )
 
@@ -591,7 +609,7 @@ def main():
         print("Event window figure written to:")
         formats = [f.strip().lower() for f in str(args.plot_formats).split(",") if f.strip()]
         for fmt in formats:
-            print(os.path.join(out_dir, f"event_window.{fmt}"))
+            print(os.path.join(out_dir, f"event_window_{args.dataset_id}.{fmt}"))
 
 
 if __name__ == "__main__":
