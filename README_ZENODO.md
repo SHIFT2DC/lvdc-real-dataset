@@ -8,6 +8,8 @@ All data are provided in their original recorded form as time-stamped CSV files,
 
 The dataset is intended to support research on LVDC monitoring, event detection, and data-driven analysis, as well as the validation of algorithms using real operational measurements.
 
+This record also includes a reproducible Python example script used to detect voltage transient events and generate a representative LVDC transient event figure in the associated manuscript.
+
 ---
 
 ## Datasets included
@@ -38,6 +40,9 @@ The dataset archive contains the following file types:
   - time coverage and sampling characteristics,
   - signal descriptions,
   - units and measurement notes.
+
+- **Example scripts (ZIP)**  
+  Reproducible Python example demonstrating voltage transient event detection based on the |dV/dt| criterion and generating the representative LVDC transient event figure shown in the associated manuscript.
 
 Each metadata file fully documents the corresponding CSV file.
 
@@ -75,6 +80,16 @@ https://github.com/fjarroyovalle/lvdc-real-dataset
 Note: the GitHub repository is not part of this Zenodo archive and may have restricted access.
 
 ---
+
+## Example scripts (ZIP)
+
+This record also includes a small reproducible example script provided as:
+
+**lvdc_dataset_example_scripts.zip**
+
+The example demonstrates how voltage transient events can be detected in the LVDC datasets using a simple |dV/dt| based metric.
+
+The script reproduces the type of event window visualization used in the associated dataset descriptor and can be used as a starting point for further analysis of LVDC voltage dynamics.
 
 ## Funding
 
