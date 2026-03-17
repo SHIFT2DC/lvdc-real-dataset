@@ -240,7 +240,8 @@ def main() -> None:
     # Create LaTeX table
     # -------------------------------------------------------------------------
     latex_lines: List[str] = []
-    latex_lines.append(r"\begin{table}[t]")
+    #latex_lines.append(r"\begin{table}[t]")
+    latex_lines.append("\\begin{table}[htbp]")
     latex_lines.append(r"\centering")
     latex_lines.append(rf"\caption{{{args.caption}}}")
     latex_lines.append(rf"\label{{{args.label}}}")
