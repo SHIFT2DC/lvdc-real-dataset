@@ -544,7 +544,7 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument(
         "--caption",
-        default="Compact validation summary for the main LVDC datasets.",
+        default="Validation summary for Datasets A and B.",
         help="LaTeX caption text for validation_summary.tex",
     )
     p.add_argument(
