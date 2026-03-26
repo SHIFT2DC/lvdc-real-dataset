@@ -237,30 +237,47 @@ def main() -> None:
     df_all.to_csv(formatted_csv_path, index=False)
 
     # -------------------------------------------------------------------------
-    # Create LaTeX table
+    # Create LaTeX table (pivoted format: one row per dataset, grouped columns)
     # -------------------------------------------------------------------------
+
+    # Pivot: rows = dataset, columns = percentile values
+    p1, p2 = df_all['threshold_value'].unique()
+    df_p1 = df_all[df_all['threshold_value'] == p1].set_index('dataset_id')
+    df_p2 = df_all[df_all['threshold_value'] == p2].set_index('dataset_id')
+    datasets = df_all['dataset_id'].unique()
+
     latex_lines: List[str] = []
-    #latex_lines.append(r"\begin{table}[t]")
-    latex_lines.append("\\begin{table}[htbp]")
+    latex_lines.append(r"\begin{table}[htbp]")
     latex_lines.append(r"\centering")
+    #latex_lines.append(rf"\caption{{Extreme $|dV/dt|$ event statistics per dataset (recording duration: 24~h).}}")
     latex_lines.append(rf"\caption{{{args.caption}}}")
     latex_lines.append(rf"\label{{{args.label}}}")
-
-    latex_lines.append(r"\begin{tabular}{lccccc}")
+    latex_lines.append(r"\begin{tabular}{lcccccc}")
     latex_lines.append(r"\toprule")
     latex_lines.append(
-        r"Dataset & Duration (h) & Percentile & Threshold (V/s) & Events/h & Samples (\%) \\"
+        r" & \multicolumn{2}{c}{Threshold (V/s)} & "
+        r"\multicolumn{2}{c}{Events/h} & "
+        r"\multicolumn{2}{c}{Samples (\%)} \\"
+    )
+    latex_lines.append(
+        r"\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}"
+    )
+    latex_lines.append(
+        r"Dataset & p99.9 & p99.95 & p99.9 & p99.95 & p99.9 & p99.95 \\"
     )
     latex_lines.append(r"\midrule")
 
-    for _, row in df_all.iterrows():
+    for ds in datasets:
+        r1 = df_p1.loc[ds]
+        r2 = df_p2.loc[ds]
         latex_lines.append(
-            f"{row['dataset_id']} & "
-            f"{row['recording_duration_h']} & "
-            f"{row['threshold_value']} & "
-            f"{row['threshold_vps_equivalent']} & "
-            f"{row['events_per_hour']} & "
-            f"{row['samples_in_event_pct']} \\\\"
+            f"{ds} & "
+            f"{r1['threshold_vps_equivalent']} & "
+            f"{r2['threshold_vps_equivalent']} & "
+            f"{r1['events_per_hour']:.2f} & "
+            f"{r2['events_per_hour']:.2f} & "
+            f"{r1['samples_in_event_pct']:.2f} & "
+            f"{r2['samples_in_event_pct']:.2f} \\\\"
         )
 
     latex_lines.append(r"\bottomrule")

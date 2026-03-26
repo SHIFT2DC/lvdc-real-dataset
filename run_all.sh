@@ -67,7 +67,7 @@ DATASETS="${DATASETS:-A B}"
 RUN_ID="${RUN_ID:-$(date -u +'%Y-%m-%d_%H%MZ')}"
 
 # Event table caption and label are passed explicitly for reproducible LaTeX output.
-EVENTS_TABLE_CAPTION="Extreme |dV/dt| event statistics per dataset."
+EVENTS_TABLE_CAPTION="Extreme \$|dV/dt|\$ event statistics per dataset (recording duration: 24~h)."
 EVENTS_TABLE_LABEL="tab:dvdt_events"
 
 echo "=============================================="
