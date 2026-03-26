@@ -332,14 +332,15 @@ def _plot_event_window(
     # Align y-labels across panels
     fig.align_ylabels(axes)
 
-    fig.suptitle(
-        f"Representative LVDC voltage transient event ({dataset_id})",
-        fontsize=title_fs,
-        y=0.96,
-    )
+    # fig.suptitle(
+    #     f"Representative LVDC voltage transient event ({dataset_id})",
+    #     fontsize=title_fs,
+    #     y=0.96,
+    # )
 
     # Reduce extra whitespace while keeping room for title
-    fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.97))
+    #fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.97))
+    fig.tight_layout(rect=(0.0, 0.0, 1.0, 1.0))
 
     formats = [f.strip().lower() for f in str(args.plot_formats).split(",") if f.strip()]
     for fmt in formats:
