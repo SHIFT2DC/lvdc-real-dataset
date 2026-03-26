@@ -416,27 +416,27 @@ def main() -> None:
     axes[-1].set_xlim(left=0.0, right=x_max)
 
     # Global figure title
-    if args.mode == "ccdf":
-        fig.text(
-            0.5,
-            0.925,
-            "Empirical |dV/dt| tail distribution",
-            ha="center",
-            va="bottom",
-            fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
-        )
-    else:
-        fig.text(
-            0.5,
-            0.925,
-            "Empirical |dV/dt| distribution",
-            ha="center",
-            va="bottom",
-            fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
-        )
+    # if args.mode == "ccdf":
+    #     fig.text(
+    #         0.5,
+    #         0.925,
+    #         "Empirical |dV/dt| tail distribution",
+    #         ha="center",
+    #         va="bottom",
+    #         fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
+    #     )
+    # else:
+    #     fig.text(
+    #         0.5,
+    #         0.925,
+    #         "Empirical |dV/dt| distribution",
+    #         ha="center",
+    #         va="bottom",
+    #         fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
+    #     )
 
     fig.tight_layout(rect=(0.0, 0.02, 1.0, 0.90))
-    fig.subplots_adjust(hspace=0.16)
+    fig.subplots_adjust(hspace=0.16, top=0.97)
 
     if args.legend:
         handles, labels = [], []
