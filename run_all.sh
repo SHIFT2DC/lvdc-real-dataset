@@ -195,13 +195,14 @@ echo
 # - variable-category distribution figures
 # ---------------------------------------------------------------------------
 echo "[8/9] Running reporting stage 04: dataset overview figures"
+
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
 
   if [ "$DS" = "A" ]; then
     WINDOW_ARGS=(--window-start-time "2025-05-02 15:15:00" --window-s 600)
     POWER_ARGS=(--power-cols "NRE K4 P1,NRE K6 P1")
-    STACK_ARGS=(--hide-xaxis-label --hide-legend)
+    #STACK_ARGS=(--hide-xaxis-label --hide-legend)
   elif [ "$DS" = "B" ]; then
     WINDOW_ARGS=(--window-start-time "2024-05-10 17:25:00" --window-s 600)
     POWER_ARGS=(--power-cols "NRE K4 P1,NRE K6 P1")
@@ -227,11 +228,13 @@ for DS in $DATASETS; do
     --tick-font-delta -1 \
     --line-width 1.4 \
     --raw-fig-width 8.0 \
-    --raw-fig-height 3.3 \
+    --raw-fig-height 3.8 \
     --dist-fig-width 7.0 \
     --dist-fig-height 2.2
+
 done
-echo
+
+echo "[8/9] Done"
 
 # ---------------------------------------------------------------------------
 # Stage 09

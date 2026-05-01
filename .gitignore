@@ -27,3 +27,5 @@ scripts/out_plots/debug/
 # Ignore generated validation and preprocessing outputs (reproducible artifacts)
 out/*
 !out/.gitkeep
+
+release/
