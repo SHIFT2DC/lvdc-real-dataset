@@ -29,6 +29,8 @@
 # 5) validation/05_data_overview_summary.py
 # 6) reporting/01_plot_dvdt_distribution.py
 # 7) reporting/02_generate_latex_table_events.py
+# 8) reporting/04_generate_dataset_overview_figures.py
+# 9) examples/01_event_detection_dvdt.py
 #
 # Notes
 # -----
@@ -83,7 +85,7 @@ echo
 # Basic sanity checks for structure, timestamps, missingness, and ranges.
 # Reuses the shared RUN_ID so all dataset-level outputs stay grouped.
 # ---------------------------------------------------------------------------
-echo "[1/8] Running validation stage 01: sanity checks"
+echo "[1/9] Running validation stage 01: sanity checks"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.01_sanity_checks \
@@ -97,7 +99,7 @@ echo
 # Sampling stability and delta-t behavior for the same main datasets.
 # This stage provides the timing validation context for later event analysis.
 # ---------------------------------------------------------------------------
-echo "[2/8] Running validation stage 02: sampling stability"
+echo "[2/9] Running validation stage 02: sampling stability"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.02_sampling_stability_dt \
@@ -110,7 +112,7 @@ echo
 # dV/dt event characterization for the main paper datasets (A/B).
 # This stage produces percentiles, event counts, and event-level artifacts.
 # ---------------------------------------------------------------------------
-echo "[3/8] Running validation stage 03: event characterization by dV/dt"
+echo "[3/9] Running validation stage 03: event characterization by dV/dt"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.03_event_characterization_dvdt \
@@ -124,7 +126,7 @@ echo
 # Cross-signal consistency between Vbus and power-related signals.
 # This stage uses the same RUN_ID to stay aligned with Stage 03.
 # ---------------------------------------------------------------------------
-echo "[4/8] Running validation stage 04: cross-signal consistency"
+echo "[4/9] Running validation stage 04: cross-signal consistency"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.04_cross_signal_consistency \
@@ -139,7 +141,7 @@ echo
 # Compact validation summary that consolidates Stage 03 and Stage 04 results.
 # We pass the same Stage 03 / Stage 04 run ids explicitly to avoid ambiguity.
 # ---------------------------------------------------------------------------
-echo "[5/8] Running validation stage 05: compact validation summary"
+echo "[5/9] Running validation stage 05: compact validation summary"
 python3 -m scripts.validation.05_data_overview_summary \
   --datasets $DATASETS \
   --events-run-id "$RUN_ID" \
@@ -153,7 +155,7 @@ echo
 # Main paper-ready stacked CCDF figure for |dV/dt| in datasets A and B.
 # This call follows the script recommended settings for the manuscript.
 # ---------------------------------------------------------------------------
-echo "[6/8] Running reporting stage 01: dV/dt tail distribution figure"
+echo "[6/9] Running reporting stage 01: dV/dt tail distribution figure"
 python3 -m scripts.reporting.01_plot_dvdt_distribution \
   --datasets $DATASETS \
   --run-id "$RUN_ID" \
@@ -176,7 +178,7 @@ echo
 # Caption and label are passed explicitly for consistent manuscript output.
 # This stage reads the Stage 03 outputs identified by the shared RUN_ID.
 # ---------------------------------------------------------------------------
-echo "[7/8] Running reporting stage 02: LaTeX event table"
+echo "[7/9] Running reporting stage 02: LaTeX event table"
 python3 -m scripts.reporting.02_generate_latex_table_events \
   --datasets $DATASETS \
   --run-id "$RUN_ID" \
@@ -186,7 +188,53 @@ python3 -m scripts.reporting.02_generate_latex_table_events \
 echo
 
 # ---------------------------------------------------------------------------
-# Stage 08
+# Reporting 04
+# Paper-ready dataset overview figures for the input datasets.
+# This stage generates:
+# - raw signal overview figures
+# - variable-category distribution figures
+# ---------------------------------------------------------------------------
+echo "[8/9] Running reporting stage 04: dataset overview figures"
+for DS in $DATASETS; do
+  echo "  -> Dataset $DS"
+
+  if [ "$DS" = "A" ]; then
+    WINDOW_ARGS=(--window-start-time "2025-05-02 15:15:00" --window-s 600)
+    POWER_ARGS=(--power-cols "NRE K4 P1,NRE K6 P1")
+    STACK_ARGS=(--hide-xaxis-label --hide-legend)
+  elif [ "$DS" = "B" ]; then
+    WINDOW_ARGS=(--window-start-time "2024-05-10 17:25:00" --window-s 600)
+    POWER_ARGS=(--power-cols "NRE K4 P1,NRE K6 P1")
+    STACK_ARGS=()
+  else
+    WINDOW_ARGS=(--window-s 600)
+    POWER_ARGS=(--power-cols "NRE K4 P1,NRE K6 P1")
+    STACK_ARGS=()
+  fi
+
+  python3 -m scripts.reporting.04_generate_dataset_overview_figures \
+    --dataset-id "$DS" \
+    --run-id "$RUN_ID" \
+    "${WINDOW_ARGS[@]}" \
+    "${POWER_ARGS[@]}" \
+    "${STACK_ARGS[@]}" \
+    --time-axis elapsed \
+    --vbus-margin 1.0 \
+    --power-margin-frac 0.10 \
+    --plot-formats svg,pdf \
+    --font-size 11 \
+    --title-font-delta 2 \
+    --tick-font-delta -1 \
+    --line-width 1.4 \
+    --raw-fig-width 8.0 \
+    --raw-fig-height 3.3 \
+    --dist-fig-width 7.0 \
+    --dist-fig-height 2.2
+done
+echo
+
+# ---------------------------------------------------------------------------
+# Stage 09
 # Reproducible example of event detection and aligned window export.
 # This demonstrates practical dataset usage on the main paper datasets.
 # For each dataset, this stage generates:
@@ -195,7 +243,7 @@ echo
 # - window.csv
 # - vector figure (SVG/PDF)
 # ---------------------------------------------------------------------------
-echo "[8/8] Running examples stage 01: event detection example"
+echo "[9/9] Running examples stage 01: event detection example"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.examples.01_event_detection_dvdt \
