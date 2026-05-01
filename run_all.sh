@@ -202,6 +202,7 @@ for DS in $DATASETS; do
   if [ "$DS" = "A" ]; then
     WINDOW_ARGS=(--window-start-time "2025-05-02 15:15:00" --window-s 600)
     POWER_ARGS=(--power-cols "NRE K4 P1,NRE K6 P1")
+    STACK_ARGS=()
     #STACK_ARGS=(--hide-xaxis-label --hide-legend)
   elif [ "$DS" = "B" ]; then
     WINDOW_ARGS=(--window-start-time "2024-05-10 17:25:00" --window-s 600)
@@ -234,7 +235,7 @@ for DS in $DATASETS; do
 
 done
 
-echo "[8/9] Done"
+echo
 
 # ---------------------------------------------------------------------------
 # Stage 09
