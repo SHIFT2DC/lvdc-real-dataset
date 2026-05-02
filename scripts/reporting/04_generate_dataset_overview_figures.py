@@ -464,7 +464,7 @@ def _plot_variable_distribution(
     tick_fs = base_fs + args.tick_font_delta
 
     # Axis labels
-    label_fs = tick_fs + 3.0
+    label_fs = tick_fs + 6.0
 
     fig, ax = plt.subplots( figsize=(float(args.dist_fig_width), float(args.dist_fig_height)))
 
@@ -474,7 +474,8 @@ def _plot_variable_distribution(
     ax.barh(y_pos, counts_np, color=bar_colors)
     
     ax.set_yticks(y_pos)
-    ax.set_yticklabels(counts.index, fontsize=tick_fs)
+    y_label_fs = tick_fs + 4.0
+    ax.set_yticklabels(counts.index, fontsize=y_label_fs)
     ax.invert_yaxis()
 
     ax.set_xlabel("Number of variables", fontsize=label_fs)

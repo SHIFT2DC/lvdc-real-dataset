@@ -230,7 +230,7 @@ for DS in $DATASETS; do
     --line-width 1.4 \
     --raw-fig-width 8.0 \
     --raw-fig-height 3.8 \
-    --dist-fig-width 7.0 \
+    --dist-fig-width 8.0 \
     --dist-fig-height 2.2
 
 done
