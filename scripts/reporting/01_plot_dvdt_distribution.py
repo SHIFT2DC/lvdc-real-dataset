@@ -326,12 +326,21 @@ def main() -> None:
     # -------------------------------------------------------------------------
     # Create stacked figure (one subplot per dataset)
     # -------------------------------------------------------------------------
+    # fig, axes = plt.subplots(
+    #     nrows=len(args.datasets),
+    #     ncols=1,
+    #     sharex=True,
+    #     figsize=(args.fig_width, args.fig_height),
+    # )
+    nrows = len(args.datasets)
+
     fig, axes = plt.subplots(
-        nrows=len(args.datasets),
+        nrows=nrows,
         ncols=1,
         sharex=True,
-        figsize=(args.fig_width, args.fig_height),
+        figsize=(args.fig_width, 2.6 * nrows),
     )
+    fig.subplots_adjust(hspace=0.15)
 
     # When only one dataset is plotted, axes is not a list; normalize it.
     if len(args.datasets) == 1:
@@ -435,7 +444,8 @@ def main() -> None:
     #         fontsize=int(args.font_size) + int(args.title_font_delta) + 2,
     #     )
 
-    fig.tight_layout(rect=(0.0, 0.02, 1.0, 0.90))
+    #fig.tight_layout(rect=(0.0, 0.02, 1.0, 0.90))
+    fig.tight_layout(rect=(0.0, 0.10, 1.0, 1.0))
     fig.subplots_adjust(hspace=0.16, top=0.97)
 
     if args.legend:
@@ -457,14 +467,14 @@ def main() -> None:
         # Only reserve space and draw legend if we actually have labels
         if len(uniq_labels) > 0:
             # Leave a small margin for the legend
-            fig.subplots_adjust(bottom=0.12)
+            fig.subplots_adjust(bottom=0.16)
 
             # bbox "x,y"
             try:
                 bx, by = args.legend_bbox.split(",")
                 bbox = (float(bx), float(by))
             except Exception:
-                bbox = (0.5, -0.02)
+                bbox = (0.5, -0.06)
 
             fig.legend(
                 uniq_handles,
