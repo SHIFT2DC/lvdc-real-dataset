@@ -256,7 +256,9 @@ def _plot_event_window(
     tick_fs = base_fs + args.tick_font_delta  # e.g. base 11 + (-1) = 10
 
     # Axis labels (Time, NRE DCbus U, etc.)
-    label_fs = tick_fs + 3.0  # 2 pt larger than ticks
+    label_fs = tick_fs + 3.0  # Axis labels
+    ylabel_fs = label_fs + 2.0  # Larger Y labels for compact stacked panels
+    ytick_fs = tick_fs + 1.0
 
     # Title
     title_fs = label_fs + 2.0  # slightly larger than axis labels
@@ -277,7 +279,7 @@ def _plot_event_window(
         nrows=nrows,
         ncols=1,
         sharex=True,
-        figsize=(8.0, 2.6 * nrows),
+        figsize=(8.0, 2.0 * nrows),
     )
     if nrows == 1:
         axes = [axes]
@@ -289,21 +291,23 @@ def _plot_event_window(
     ax0.plot(t, df_win[vbus_col], linewidth=float(args.line_width), color=vbus_color)
     ax0.axvline(peak_time, linestyle="--", linewidth=1.0, color=marker_color)
     #ax0.set_ylabel(vbus_col, fontsize=label_fs)
-    ax0.set_ylabel(f"{vbus_col} (V)", fontsize=label_fs)
-    ax0.tick_params(axis="both", labelsize=tick_fs)
+    ax0.set_ylabel(f"{vbus_col} (V)", fontsize=ylabel_fs)
+    ax0.tick_params(axis="y", labelsize=ytick_fs)
+    ax0.tick_params(axis="x", labelsize=tick_fs + 2)
     ax0.grid(True, alpha=0.25)
     ax0.set_xlim(window_start, window_end)
     ax0.yaxis.set_major_formatter(StrMethodFormatter("{x:.0f}"))
 
-    # Annotate the selected |dV/dt| peak inside the voltage panel
+    # Annotate the selected |dV/dt| peak inside the voltage panel.
+    # Use axes coordinates so the label remains stable after rescaling.
     ax0.text(
         0.98,
-        0.92,
+        0.65,
         f"|dV/dt| peak = {peak_abs_dvdt:.2f} V/s",
         transform=ax0.transAxes,
         ha="right",
         va="top",
-        fontsize=base_fs,
+        fontsize=base_fs + 2.0,
     )
 
     # ------------------------------------------------------------
@@ -314,8 +318,9 @@ def _plot_event_window(
         plot_label = POWER_LABELS.get(col, col)
         ax.plot(t, df_win[col], linewidth=float(args.line_width), color=power_color)
         ax.axvline(peak_time, linestyle="--", linewidth=1.0, color=marker_color)
-        ax.set_ylabel(plot_label, fontsize=label_fs)
-        ax.tick_params(axis="both", labelsize=tick_fs)
+        ax.set_ylabel(plot_label, fontsize=ylabel_fs)
+        ax.tick_params(axis="y", labelsize=ytick_fs)
+        ax.tick_params(axis="x", labelsize=tick_fs + 2)
         ax.grid(True, alpha=0.25)
         ax.set_xlim(window_start, window_end)
         ax.yaxis.set_major_formatter(StrMethodFormatter("{x:.0f}"))
@@ -323,11 +328,16 @@ def _plot_event_window(
     axes[-1].set_xlabel("Time", fontsize=label_fs + 2.0)
 
     # Rotate x tick labels and increase size
-    for ax in axes:
-        ax.tick_params(axis="x", labelrotation=30, labelsize=tick_fs + 2)
+    #for ax in axes:
+    #    ax.tick_params(axis="x", labelrotation=30, labelsize=tick_fs + 2)
+        
+    # Rotate x tick labels on the bottom axis only
+    axes[-1].tick_params(axis="x", labelrotation=30, labelsize=tick_fs + 2)
 
     # Format time axis
     axes[-1].xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
+    
+    fig.subplots_adjust(hspace=0.18)
 
     # Align y-labels across panels
     fig.align_ylabels(axes)
