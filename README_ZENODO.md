@@ -22,7 +22,7 @@ The record includes three datasets corresponding to different LVDC operating con
 - **Dataset B – LVDC 380 V, battery on (buffered)**  
   Measurements acquired from the same installation under comparable load conditions, but with an active battery energy storage system connected to the DC bus, providing voltage buffering.
 
-- **Dataset C – LVDC 700 V AFE (optional reference dataset)**  
+- **Dataset C – LVDC 700 V AFE (complementary dataset)** 
   Measurements acquired from a separate 700 V DC active front-end (AFE) installation, included as a complementary reference dataset.
 
 ---
@@ -44,7 +44,7 @@ The dataset archive contains the following file types:
 - **Example scripts (ZIP)**  
   Reproducible Python example demonstrating voltage transient event detection based on the |dV/dt| criterion and generating the representative LVDC transient event figure shown in the associated manuscript.
 
-Each metadata file fully documents the corresponding CSV file.
+Each metadata file fully documents the corresponding CSV file. For a small number of signals, the physical interpretation or unit could not be independently confirmed and is noted accordingly in the metadata. Users are encouraged to verify these signals with the system operator before using them for quantitative analysis.
 
 ---
 

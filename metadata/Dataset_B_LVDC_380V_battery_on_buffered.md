@@ -34,8 +34,8 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 |------------|------------|------|
 | Time | Timestamp of the measurement | – |
 | P_ges | Total active power of the installation | W |
-| LF_ges | Global load or power factor indicator reported by the system | – |
-| S_ges | Apparent power of the installation | VA |
+| LF_ges | Likely the global power factor of the installation as reported by the monitoring system. Exact definition depends on the internal implementation and could not be independently confirmed | – |
+| S_ges | Apparent power of the installation as reported by the monitoring system. Reliability of this signal should be verified, as it was found to be consistently zero in Dataset A from the same installation | VA |
 | I_L1 | AC phase L1 current | A |
 | I_L2 | AC phase L2 current | A |
 | I_L3 | AC phase L3 current | A |
@@ -50,14 +50,14 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | PV Carport Pges | Active power from PV carport installation | W |
 | PV Werkstatt Pges | Active power from PV workshop installation | W |
 | NRE DCbus U | DC bus voltage at the main LVDC node | V |
-| NRE K1 P1 | Power measurement of DC/DC converter branch K1 | W |
-| NRE K4 P1 | Power measurement of DC/DC converter branch K4 | W |
-| NRE K6 P1 | Power measurement of DC/DC converter branch K6 | W |
-| Nachladung P | Battery charging or discharging power reported by the system | W |
-| Nachladung I | Battery charging or discharging current reported by the system | A |
+| NRE K1 P1 | Power of DC/DC converter branch K1. In this dataset, values are consistently positive | W |
+| NRE K4 P1 | Power of DC/DC converter branch K4, associated with a vertical PV installation | W |
+| NRE K6 P1 | Power of DC/DC converter branch K6, associated with a vertical PV installation | W |
+| Nachladung P | AC/DC infeed active power reported by the monitoring system (see note below) | W |
+| Nachladung I | AC/DC infeed current reported by the monitoring system (see note below) | A |
 | DC Status | DC system status indicator | – |
 | DC ISO R | DC insulation resistance | Ω |
-| AC ISO R | AC insulation resistance | Ω |
+| AC ISO R | AC insulation resistance. This signal was consistently recorded as zero during the acquisition period; its reliability cannot be confirmed | Ω |
 | BAT SoP | Battery state of power indicator | % |
 | BAT SoC | Battery state of charge indicator | % |
 | BAT SoCP | Processed battery state of charge indicator | % |
@@ -67,21 +67,23 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | BAT T | Battery temperature | °C |
 | BAT Stat | Battery status indicator | – |
 | BAT RlSt | Battery relay state indicator | – |
-| NetzL1_H1 | Harmonic component indicator H1 on phase L1 | – |
-| NetzL1_H3 | Harmonic component indicator H3 on phase L1 | – |
-| NetzL1_H6 | Harmonic component indicator H6 on phase L1 | – |
-| NetzL2_H1 | Harmonic component indicator H1 on phase L2 | – |
-| NetzL2_H3 | Harmonic component indicator H3 on phase L2 | – |
-| NetzL2_H6 | Harmonic component indicator H6 on phase L2 | – |
-| NetzL3_H1 | Harmonic component indicator H1 on phase L3 | – |
-| NetzL3_H3 | Harmonic component indicator H3 on phase L3 | – |
-| NetzL3_H6 | Harmonic component indicator H6 on phase L3 | – |
+| NetzL1_H1 | Harmonic component indicator H1 on phase L1. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL1_H3 | Harmonic component indicator H3 on phase L1. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL1_H6 | Harmonic component indicator H6 on phase L1. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL2_H1 | Harmonic component indicator H1 on phase L2. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL2_H3 | Harmonic component indicator H3 on phase L2. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL2_H6 | Harmonic component indicator H6 on phase L2. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL3_H1 | Harmonic component indicator H1 on phase L3. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL3_H3 | Harmonic component indicator H3 on phase L3. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
+| NetzL3_H6 | Harmonic component indicator H6 on phase L3. Physical unit and exact definition depend on the internal implementation of the monitoring system and could not be independently confirmed | – |
 
 ## Notes on battery-related signals
 
 In contrast to Dataset A, battery-related variables in this dataset reflect active participation of the battery energy storage system. The battery exchanges power with the DC bus through charging and discharging actions, contributing to voltage regulation and power balancing.
 
 The exact internal control logic of the battery system is not described in this dataset and may depend on proprietary implementation details of the industrial installation.
+
+The signals `Nachladung P` and `Nachladung I` are interpreted as the active power and current of the AC/DC infeed, based on information provided by the system operator. Users should be aware that the naming convention used in the original logging system may suggest a different interpretation, and independent verification is recommended before using these signals for quantitative analysis.
 
 ## Data quality and limitations
 
