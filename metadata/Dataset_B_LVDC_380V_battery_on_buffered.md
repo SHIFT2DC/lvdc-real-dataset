@@ -83,7 +83,7 @@ In contrast to Dataset A, battery-related variables in this dataset reflect acti
 
 The exact internal control logic of the battery system is not described in this dataset and may depend on proprietary implementation details of the industrial installation.
 
-The signals `Nachladung P` and `Nachladung I` are interpreted as the active power and current of the AC/DC infeed, based on information provided by the system operator. Users should be aware that the naming convention used in the original logging system may suggest a different interpretation, and independent verification is recommended before using these signals for quantitative analysis.
+The signals `Nachladung P` and `Nachladung I` are interpreted as the active power and current of the AC/DC infeed, based on information provided by the system operator. The original naming convention of the logging system may suggest a different interpretation and should be considered when working with these signals.
 
 ## Data quality and limitations
 

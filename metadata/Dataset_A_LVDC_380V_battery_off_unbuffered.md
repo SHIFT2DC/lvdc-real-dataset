@@ -81,7 +81,7 @@ Although battery-related variables are included in the dataset, the battery syst
 
 The presence of these variables allows structural consistency with other datasets acquired from the same installation under different operating conditions.
 
-The signals `Nachladung P` and `Nachladung I` were originally labelled as battery charging power and current. Based on observed values during the acquisition period, when the battery was inactive (`BAT I` = 0 A throughout), these signals are interpreted as the active power and current of the AC/DC infeed. This interpretation is consistent with information provided by the system operator and should be considered when using these signals.
+The signals `Nachladung P` and `Nachladung I` were originally labelled as battery charging power and current. Based on observed values during the acquisition period, when the battery was inactive (`BAT I` = 0 A throughout), these signals are interpreted as the active power and current of the AC/DC infeed. This interpretation is consistent with information provided by the system operator and should be considered when working with these signals.
 
 ## Data quality and limitations
 
