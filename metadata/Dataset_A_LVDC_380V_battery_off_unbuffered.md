@@ -2,7 +2,7 @@
 
 ## Overview
 
-This dataset contains real-world time-series measurements acquired from an operational hybrid AC/DC electrical installation with a nominal low-voltage DC (LVDC) bus of 380 V. The data were collected within the context of the SHIFT2DC project and reflect normal operation of the installation during an extended continuous period.
+This dataset contains real-world time-series measurements acquired from an operational hybrid AC/DC electrical installation with a nominal low-voltage direct current (LVDC) bus of 380 V. The data were collected within the context of the SHIFT2DC project and reflect normal operation of the installation during an extended continuous period.
 
 The dataset corresponds to a measurement campaign carried out on 2 May 2025. During this period, the battery energy storage system connected to the DC bus was present but not operational due to a reported fault condition. As a result, the recorded DC bus behaviour represents an unbuffered operating regime, where voltage variations are mainly driven by load changes and power electronic converter operation.
 

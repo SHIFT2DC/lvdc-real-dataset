@@ -1,8 +1,8 @@
-# A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritization
+# A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization
 
-This repository contains real-world time-series measurements and auxiliary analysis resources related to operational low-voltage DC (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
+This repository contains real-world time-series measurements and auxiliary analysis resources related to operational low-voltage direct current (LVDC) installations with hybrid AC/DC infrastructure. The data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
 
-The datasets are being prepared and curated in the context of a Data Descriptor manuscript and related validation activities within the SHIFT2DC Horizon Europe project.
+The datasets were curated and documented as part of the SHIFT2DC Horizon Europe project (Grant Agreement No. 101136131) and are described in an accompanying Data Descriptor manuscript.
 
 ## Dataset overview
 
@@ -18,7 +18,7 @@ The repository currently includes three curated reference datasets obtained unde
 
 Together, these two datasets enable controlled comparison between unbuffered and buffered LVDC operation using measurements from the same installation and voltage level.
 
-### Optional complementary dataset (700 V LVDC)
+### Complementary dataset (700 V LVDC)
 
 - **LVDC_700V_AFE_2025_12_15.csv**  
   Dataset acquired on 15 December 2025 from an industrial active front end (AFE) installation operating at a nominal DC bus voltage of approximately 700 V. This dataset focuses on a reduced set of electrical and system state variables and is included as a complementary reference representing a different LVDC voltage level and operational context.
@@ -159,8 +159,12 @@ A typical workflow is:
 
 ## Citation
 
-A Data Descriptor manuscript is currently under preparation. A DOI has been reserved via Zenodo and will be formally registered upon publication of the dataset.
+If you use this dataset, please cite:
+
+Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldaña, J. (2026).
+A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization.
+Zenodo. https://doi.org/10.5281/zenodo.18524235
 
 ## License and access
 
-The final public license and release conditions will be defined prior to publication, in agreement with the data provider(s). Until then, this repository is intended for internal research, analysis, and manuscript preparation.
+This repository is released under the Creative Commons Attribution 4.0 International License (CC BY 4.0). See the LICENSE file for details.

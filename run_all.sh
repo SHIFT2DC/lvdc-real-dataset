@@ -5,7 +5,7 @@
 # Purpose
 # -------
 # Run the main reproducible validation and reporting pipeline for the
-# Scientific Data LVDC dataset paper.
+# LVDC dataset described in the associated Data Descriptor manuscript.
 #
 # This script uses one shared RUN_ID so that all outputs from the same
 # pipeline execution are grouped consistently across:

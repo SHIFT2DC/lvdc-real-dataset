@@ -1,7 +1,12 @@
 cff-version: 1.2.0
-title: "A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritisation"
-version: 0.1.0
+title: "A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization"
+version: 1.2.0
 type: dataset
+# TODO before making Zenodo record public:
+# - Add date-released: "YYYY-MM-DD" (date when Zenodo record goes public)
+# - Optionally replace doi with the version-specific DOI from Zenodo v1.2
+
+doi: 10.5281/zenodo.18524235
 
 authors:
   - family-names: Arroyo-Valle

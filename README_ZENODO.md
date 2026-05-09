@@ -1,8 +1,8 @@
-# A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritization
+# A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization
 
 ## Overview
 
-This record contains a collection of real-world time-series datasets acquired from operational low-voltage DC (LVDC) installations under normal industrial operating conditions. The datasets were collected within the context of the SHIFT2DC European project and reflect realistic voltage dynamics, load variations, and measurement noise that are typically not captured in simulation-based studies.
+This record contains a collection of real-world time-series datasets acquired from operational low-voltage direct current (LVDC) installations under normal industrial operating conditions. The datasets were collected within the context of the SHIFT2DC European project and reflect realistic voltage dynamics, load variations, and measurement noise that are typically not captured in simulation-based studies.
 
 All data are provided in their original recorded form as time-stamped CSV files, without filtering, smoothing, resampling, or post-processing.
 
@@ -102,7 +102,7 @@ This work was supported by the European Commission under the SHIFT2DC project (G
 If you use this dataset, please cite:
 
 Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldaña, J. (2026).
-A real-world low-voltage DC (LVDC) dataset for event-driven monitoring and signal prioritization (v1.0) [Data set].
+A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization (v1.0) [Data set].
 Zenodo. https://doi.org/10.5281/zenodo.18524235
 
 

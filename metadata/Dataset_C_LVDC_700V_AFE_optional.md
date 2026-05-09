@@ -2,7 +2,7 @@
 
 ## Overview
 
-This dataset contains real-world time-series measurements acquired from an AC/DC power converter developed by an industrial partner within the context of the SHIFT2DC project. The converter is intended for integration into low-voltage DC (LVDC) systems and was operated in this case with a nominal DC bus voltage of 700 V.
+This dataset contains real-world time-series measurements acquired from an AC/DC power converter developed by an industrial partner within the context of the SHIFT2DC project. The converter is intended for integration into low-voltage direct current (LVDC) systems and was operated in this case with a nominal DC bus voltage of 700 V.
 
 The dataset corresponds to a measurement campaign carried out on 15 December 2025. It is provided as an optional complementary dataset and reflects a different LVDC voltage level and system architecture compared to Datasets A and B.
 
