@@ -44,7 +44,7 @@ The dataset archive contains the following file types:
 - **Example scripts (ZIP)**  
   Reproducible Python example demonstrating voltage transient event detection based on the |dV/dt| criterion and generating the representative LVDC transient event figure shown in the associated manuscript.
 
-Each metadata file fully documents the corresponding CSV file. For a small number of signals, the physical interpretation or unit could not be independently confirmed and is noted accordingly in the metadata. Users are encouraged to verify these signals with the system operator before using them for quantitative analysis.
+Each metadata file fully documents the corresponding CSV file. For a small number of signals, notes on data quality or reliability are included directly in the metadata files where relevant.
 
 ---
 
