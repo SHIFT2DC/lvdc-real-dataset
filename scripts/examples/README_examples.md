@@ -4,7 +4,7 @@ This example script demonstrates how voltage transient events can be detected in
 
 The script computes the derivative of the DC bus voltage and identifies extreme events using a percentile-based threshold. A representative event window is then automatically selected and visualized.
 
-The generated figure corresponds to the example shown in the associated Scientific Data manuscript.
+The generated figure corresponds to the example shown in the associated Data Descriptor manuscript.
 
 ## Requirements
 
