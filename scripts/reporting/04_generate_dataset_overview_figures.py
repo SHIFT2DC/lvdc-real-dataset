@@ -2,7 +2,6 @@
 04_generate_dataset_overview_figures.py
 
 Dataset overview figures for the LVDC real-world datasets
-(Scientific Data - Input datasets / Data overview support)
 
 Purpose
 -------

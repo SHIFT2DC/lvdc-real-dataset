@@ -5,7 +5,7 @@ Create the Zenodo example package for the LVDC dataset.
 
 Purpose
 -------
-This script packages the reproducible example used in the Scientific Data
+This script packages the reproducible example used in the associated Data Descriptor
 manuscript into a ZIP archive that can be uploaded to Zenodo together with
 the dataset files.
 

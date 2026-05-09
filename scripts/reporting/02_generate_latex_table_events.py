@@ -4,7 +4,7 @@ Script: 02_generate_latex_table_events.py
 Purpose
 -------
 Generate a LaTeX-ready table summarizing extreme |dV/dt| event statistics
-for inclusion in the Scientific Data manuscript.
+for inclusion in the associated Data Descriptor manuscript.
 
 This script formats the output produced by:
 
