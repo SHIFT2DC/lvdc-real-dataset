@@ -163,7 +163,7 @@ If you use this dataset, please cite:
 
 Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldaña, J. (2026).
 A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization.
-Zenodo. https://doi.org/10.5281/zenodo.18524235
+Zenodo. https://doi.org/10.5281/zenodo.18524234
 
 ## License and access
 

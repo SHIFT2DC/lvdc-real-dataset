@@ -102,7 +102,7 @@ This work was supported by the European Commission under the SHIFT2DC project (G
 If you use this dataset, please cite:
 
 Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldaña, J. (2026).
-A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization (v1.0) [Data set].
-Zenodo. https://doi.org/10.5281/zenodo.18524235
+A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization [Data set].
+Zenodo. https://doi.org/10.5281/zenodo.18524234
 
 
