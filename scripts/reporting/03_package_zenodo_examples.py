@@ -11,7 +11,7 @@ the dataset files.
 
 The archive contains:
     - scripts/examples/01_event_detection_dvdt.py
-    - scripts/examples/README_example.md
+    - scripts/examples/README_examples.md
 
 These files provide a minimal example demonstrating how voltage transient
 events can be detected using the |dV/dt| criterion and how the representative
@@ -63,7 +63,7 @@ def main():
     tmp_dir.mkdir()
 
     shutil.copy(EXAMPLES_DIR / "01_event_detection_dvdt.py", tmp_dir)
-    shutil.copy(EXAMPLES_DIR / "README_example.md", tmp_dir)
+    shutil.copy(EXAMPLES_DIR / "README_examples.md", tmp_dir)
 
     zip_path = shutil.make_archive(
         str(OUT_DIR / ZIP_NAME),
