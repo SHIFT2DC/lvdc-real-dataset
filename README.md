@@ -2,14 +2,17 @@
 
 <p align="center">
   <a href="https://doi.org/10.5281/zenodo.18524234">
-    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18524234.svg" alt="DOI">
+    <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.18524234-blue?style=flat-square" alt="DOI">
   </a>
   <img src="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey?style=flat-square" alt="License: CC BY 4.0">
   <img src="https://img.shields.io/badge/Data-Real--world%20LVDC-green?style=flat-square" alt="Real-world LVDC data">
 </p>
 
 <p align="center">
-  <img src="figures/LVDC_conceptual_diagram.svg" width="500" alt="LVDC system schematic overview">
+  <img src="figures/LVDC_conceptual_diagram_light.svg#gh-light-mode-only" width="500"
+       alt="LVDC system schematic overview">
+  <img src="figures/LVDC_conceptual_diagram_dark.svg#gh-dark-mode-only" width="500"
+       alt="LVDC system schematic overview">
 </p>
 
 Real-world time-series measurements from operational low-voltage direct current (LVDC) installations with hybrid AC/DC infrastructure. Data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
@@ -149,8 +152,12 @@ This work received funding from the European Union's Horizon Europe programme un
        style="margin-right:12px; vertical-align:middle;">
   <img src="figures/logos/logo_circe.svg" height="34" alt="CIRCE"
        style="margin-right:12px; vertical-align:middle;">
-  <img src="figures/logos/logo_fraunhofer.svg" height="34" alt="Fraunhofer IISB"
-       style="background:#fff; padding:4px 6px; border-radius:4px; margin-right:12px; vertical-align:middle;">
-  <img src="figures/logos/logo_UV.svg" height="34" alt="Universitat de València"
-       style="background:#fff; padding:4px 6px; border-radius:4px; vertical-align:middle;">
+  <img src="figures/logos/logo_fraunhofer.svg#gh-light-mode-only" height="34" alt="Fraunhofer IISB"
+       style="margin-right:12px; vertical-align:middle;">
+  <img src="figures/logos/logo_fraunhofer_white.svg#gh-dark-mode-only" height="34" alt="Fraunhofer IISB"
+       style="margin-right:12px; vertical-align:middle;">
+  <img src="figures/logos/logo_UV.svg#gh-light-mode-only" height="34" alt="Universitat de València"
+       style="vertical-align:middle;">
+  <img src="figures/logos/logo_UV_white.svg#gh-dark-mode-only" height="34" alt="Universitat de València"
+       style="vertical-align:middle;">
 </p>
