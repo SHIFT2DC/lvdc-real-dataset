@@ -2,14 +2,16 @@
 
 <p align="center">
   <a href="https://doi.org/10.5281/zenodo.18524234">
-    <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.18524234-blue?style=flat-square" alt="DOI">
+    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18524234.svg" alt="DOI">
   </a>
   <img src="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey?style=flat-square" alt="License: CC BY 4.0">
   <img src="https://img.shields.io/badge/Data-Real--world%20LVDC-green?style=flat-square" alt="Real-world LVDC data">
 </p>
 
 <p align="center">
-  <img src="figures/LVDC_conceptual_diagram.svg" width="500" alt="LVDC system schematic overview">
+  <img src="figures/LVDC_conceptual_diagram.svg" width="500"
+       alt="LVDC system schematic overview"
+       style="background:#fff; border-radius:6px; padding:8px;">
 </p>
 
 Real-world time-series measurements from operational low-voltage direct current (LVDC) installations with hybrid AC/DC infrastructure. Data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
@@ -53,6 +55,7 @@ Signal descriptions, units, and acquisition context for each dataset are provide
 ├── release/                        # Packaged example scripts for Zenodo release
 ├── run_all.sh                      # Entry point for the full validation pipeline
 ├── requirements.txt                # Python dependencies
+├── README_ZENODO.md                # Description file included in the Zenodo record
 └── CITATION.cff                    # Citation metadata
 ```
 
