@@ -9,9 +9,7 @@
 </p>
 
 <p align="center">
-  <img src="figures/LVDC_conceptual_diagram.svg" width="500"
-       alt="LVDC system schematic overview"
-       style="background:#fff; border-radius:6px; padding:8px;">
+  <img src="figures/LVDC_conceptual_diagram.svg" width="500" alt="LVDC system schematic overview">
 </p>
 
 Real-world time-series measurements from operational low-voltage direct current (LVDC) installations with hybrid AC/DC infrastructure. Data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
@@ -147,14 +145,12 @@ Released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See `L
 This work received funding from the European Union's Horizon Europe programme under grant agreement No. 101136131 (SHIFT2DC project).
 
 <p align="left">
-  <a href="https://www.shift2dc.eu">
-    <img src="figures/logos/logo_shift2dc.svg" height="34" alt="SHIFT2DC"
-         style="background:#fff; padding:4px 8px; border-radius:4px; margin-right:12px; vertical-align:middle;">
-  </a>
+  <img src="figures/logos/logo_shift2dc.svg" height="34" alt="SHIFT2DC"
+       style="margin-right:12px; vertical-align:middle;">
   <img src="figures/logos/logo_circe.svg" height="34" alt="CIRCE"
-       style="background:#fff; padding:4px 8px; border-radius:4px; margin-right:12px; vertical-align:middle;">
+       style="margin-right:12px; vertical-align:middle;">
   <img src="figures/logos/logo_fraunhofer.svg" height="34" alt="Fraunhofer IISB"
-       style="background:#fff; padding:4px 8px; border-radius:4px; margin-right:12px; vertical-align:middle;">
+       style="background:#fff; padding:4px 6px; border-radius:4px; margin-right:12px; vertical-align:middle;">
   <img src="figures/logos/logo_UV.svg" height="34" alt="Universitat de València"
-       style="background:#fff; padding:4px 8px; border-radius:4px; vertical-align:middle;">
+       style="background:#fff; padding:4px 6px; border-radius:4px; vertical-align:middle;">
 </p>
