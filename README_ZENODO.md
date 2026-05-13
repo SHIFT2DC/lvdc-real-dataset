@@ -73,11 +73,9 @@ The datasets are not intended to represent controlled laboratory experiments, bu
 
 ## Related resources
 
-Additional analysis scripts, plotting utilities, and exploratory tools related to these datasets are maintained in a separate GitHub repository for research and reproducibility purposes:
+Additional analysis scripts, plotting utilities, metadata, and reproducible processing workflows related to these datasets are maintained in the associated GitHub repository:
 
-https://github.com/fjarroyovalle/lvdc-real-dataset
-
-Note: the GitHub repository is not part of this Zenodo archive and may have restricted access.
+https://github.com/SHIFT2DC/lvdc-real-dataset
 
 ---
 
