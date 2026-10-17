@@ -51,8 +51,8 @@ Each metadata file fully documents the corresponding CSV file. For a small numbe
 ## Data format
 
 - File format: comma-separated values (CSV)
-- Time representation: human-readable timestamps (YYYY-MM-DD HH:MM:SS)
-- Sampling interval: approximately 1 second (with minor timing variations typical of industrial logging systems)
+- Time representation: human-readable timestamps (YYYY-MM-DD HH:MM:SS, with millisecond resolution in Dataset C)
+- Sampling interval: approximately 1 second (with minor timing variations typical of industrial logging systems; Dataset C also contains four gaps longer than 1 h, documented in its metadata file)
 - Data processing: none (raw recorded data)
 
 No temporal alignment, interpolation, or correction has been applied.
