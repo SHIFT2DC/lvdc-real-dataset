@@ -32,7 +32,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 |------------|------------|------|
 | Time | Timestamp of the measurement | – |
 | P_ges | Total active power of the installation | W |
-| LF_ges | Global power factor of the installation | – |
+| LF_ges | Global power factor of the installation. Recorded values range from -0.65 to 1.17; 200 of the 86399 samples (0.23%) exceed 1 in absolute value, which is not consistent with a power factor. The cause could not be determined from the information available | – |
 | S_ges | Apparent power of the installation. This signal was consistently recorded as zero throughout the full recording period | VA |
 | I_L1 | AC phase L1 current | A |
 | I_L2 | AC phase L2 current | A |
@@ -56,7 +56,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | DC Status | DC system status indicator | – |
 | DC ISO R | DC insulation resistance | Ω |
 | AC ISO R | AC insulation resistance. According to the system operator, this measurement point may not be connected | Ω |
-| BAT SoP | Battery state of power indicator | % |
+| BAT SoP | Battery state of power indicator | W |
 | BAT SoC | Battery state of charge indicator | % |
 | BAT SoCP | Processed battery state of charge indicator | % |
 | BAT SoOP | Battery operational state indicator | – |
