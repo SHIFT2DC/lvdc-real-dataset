@@ -20,7 +20,7 @@ All measurements reflect normal operational conditions of the installation and w
 
 The dataset is provided as a single comma-separated values (CSV) file containing time-stamped measurements. Timestamps are expressed in a human-readable format (YYYY-MM-DD HH:MM:SS) and represent the local system time of the logging device.
 
-The nominal sampling interval is approximately 1 second, with minor timing variations typical of industrial data logging systems. No temporal resampling or interpolation has been applied.
+The nominal sampling interval is approximately 1 second. In every minute of the recording, second :53 is missing and second :54 appears twice, giving 1440 pairs of rows with the same timestamp; the two rows of each pair are not identical. No temporal resampling or interpolation has been applied.
 
 The dataset is provided in its original recorded form, without filtering, smoothing, or post-processing.
 
@@ -34,7 +34,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 |------------|------------|------|
 | Time | Timestamp of the measurement | – |
 | P_ges | Total active power of the installation | W |
-| LF_ges | Global power factor of the installation | – |
+| LF_ges | Global power factor of the installation. Recorded values range from -0.92 to 1.58; 742 of the 86399 samples (0.86%) exceed 1 in absolute value, which is not consistent with a power factor. The cause could not be determined from the information available | – |
 | S_ges | Apparent power of the installation. This signal was consistently recorded as zero throughout the full recording period | VA |
 | I_L1 | AC phase L1 current | A |
 | I_L2 | AC phase L2 current | A |
@@ -50,7 +50,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | PV Carport Pges | Active power from PV carport installation | W |
 | PV Werkstatt Pges | Active power from PV workshop installation | W |
 | NRE DCbus U | DC bus voltage at the main LVDC node | V |
-| NRE K1 P1 | Power of DC/DC converter branch K1. In this dataset, values are consistently positive | W |
+| NRE K1 P1 | Power of DC/DC converter branch K1. In this dataset, values range from -3329 to 1517; 66628 samples (77.12%) are positive, 14778 (17.10%) negative and 4993 (5.78%) zero | W |
 | NRE K4 P1 | Power of DC/DC converter branch K4, associated with a vertical PV installation | W |
 | NRE K6 P1 | Power of DC/DC converter branch K6, associated with a vertical PV installation | W |
 | Nachladung P | AC/DC infeed active power reported by the monitoring system (see note below) | W |
@@ -58,7 +58,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | DC Status | DC system status indicator | – |
 | DC ISO R | DC insulation resistance | Ω |
 | AC ISO R | AC insulation resistance. According to the system operator, this measurement point may not be connected | Ω |
-| BAT SoP | Battery state of power indicator | % |
+| BAT SoP | Battery state of power indicator | W |
 | BAT SoC | Battery state of charge indicator | % |
 | BAT SoCP | Processed battery state of charge indicator | % |
 | BAT SoOP | Battery operational state indicator | – |
