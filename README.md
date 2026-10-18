@@ -27,7 +27,7 @@ Real-world time-series measurements from operational low-voltage direct current 
 |----|-------------|---------|------|----------|----------|
 | **A** | 380 V hybrid AC/DC | Off (fault condition) | 2025-05-02 | ~1 s | 24 h |
 | **B** | 380 V hybrid AC/DC | On (active) | 2024-05-10 | ~1 s | 24 h |
-| **C** | 700 V AFE | — | 2025-12-15 | ~0.5 s | Complementary |
+| **C** | 700 V AFE | — | 2025-12-15 | ~1 s | Complementary |
 
 Datasets A and B capture the same installation under different battery operating conditions, enabling controlled comparison between **unbuffered** and **buffered** LVDC operation. Dataset C is an independent complementary record from a second industrial partner at a higher voltage level.
 
