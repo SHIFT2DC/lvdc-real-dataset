@@ -148,7 +148,7 @@ def _compute_dvdt_and_dp(
     return dt_s, dV, dP, dVdt
 
 
-def _coherent_sign_ratio(dV: pd.Series, dP: pd.Series, dv_pctl: float, dp_pctl: float) -> Tuple[float, int]:
+def _coherent_sign_ratio(dV: pd.Series, dP: pd.Series, dv_pctl: float, dp_pctl: float) -> Tuple[float, int, Dict[str, float]]:
     """
     Coherent sign ratio on salient steps.
 
@@ -157,12 +157,24 @@ def _coherent_sign_ratio(dV: pd.Series, dP: pd.Series, dv_pctl: float, dp_pctl: 
 
     Coherent rule:
       sign(ΔV) == -sign(ΔP)
+
+    The function also returns the details of the step selection: the |ΔV| and |ΔP|
+    thresholds, the fraction of steps with |ΔV| or |ΔP| at or above its threshold,
+    and the number of steps considered. These details do not change the ratio.
     """
+    details: Dict[str, float] = {
+        "coherent_sign_dv_threshold": float("nan"),
+        "coherent_sign_dp_threshold": float("nan"),
+        "coherent_sign_dv_frac": float("nan"),
+        "coherent_sign_dp_frac": float("nan"),
+        "coherent_sign_steps": 0,
+    }
+
     dV = dV.dropna()
     dP = dP.dropna()
     n = min(len(dV), len(dP))
     if n < 3:
-        return float("nan"), 0
+        return float("nan"), 0, details
 
     dV = dV.iloc[-n:]
     dP = dP.iloc[-n:]
@@ -173,16 +185,22 @@ def _coherent_sign_ratio(dV: pd.Series, dP: pd.Series, dv_pctl: float, dp_pctl: 
     dv_thr = float(np.percentile(abs_dV, dv_pctl))
     dp_thr = float(np.percentile(abs_dP, dp_pctl))
 
+    details["coherent_sign_dv_threshold"] = dv_thr
+    details["coherent_sign_dp_threshold"] = dp_thr
+    details["coherent_sign_dv_frac"] = float(np.mean(abs_dV >= dv_thr))
+    details["coherent_sign_dp_frac"] = float(np.mean(abs_dP >= dp_thr))
+    details["coherent_sign_steps"] = int(n)
+
     mask = (np.abs(dV.to_numpy()) >= dv_thr) & (np.abs(dP.to_numpy()) >= dp_thr)
     if int(mask.sum()) == 0:
-        return float("nan"), 0
+        return float("nan"), 0, details
 
     dV_sel = dV.to_numpy()[mask]
     dP_sel = dP.to_numpy()[mask]
 
     coh = (np.sign(dV_sel) == -np.sign(dP_sel))
     ratio = float(np.mean(coh)) if len(coh) else float("nan")
-    return ratio, int(len(coh))
+    return ratio, int(len(coh)), details
 
 def _branch_metrics(
     t: pd.Series,
@@ -202,6 +220,9 @@ def _branch_metrics(
         - spearman_abs_dvdt_abs_dp
         - coherent_sign_ratio
         - coherent_sign_n
+        - coherent_sign_dv_threshold, coherent_sign_dp_threshold
+        - coherent_sign_dv_frac, coherent_sign_dp_frac
+        - coherent_sign_steps
         - n_rows_used
     """
     # Keep only rows where time, voltage and this branch are valid
@@ -217,6 +238,11 @@ def _branch_metrics(
             "spearman_abs_dvdt_abs_dp": float("nan"),
             "coherent_sign_ratio": float("nan"),
             "coherent_sign_n": 0,
+            "coherent_sign_dv_threshold": float("nan"),
+            "coherent_sign_dp_threshold": float("nan"),
+            "coherent_sign_dv_frac": float("nan"),
+            "coherent_sign_dp_frac": float("nan"),
+            "coherent_sign_steps": 0,
             "n_rows_used": int(len(t1)),
         }
 
@@ -233,7 +259,7 @@ def _branch_metrics(
     spearman_abs = _spearman(dvdt_abs.loc[mask], dp_abs.loc[mask])
 
     # Coherent sign ratio
-    coh_ratio, coh_n = _coherent_sign_ratio(
+    coh_ratio, coh_n, coh_details = _coherent_sign_ratio(
         dV, dP, dv_pctl=float(dv_pctl), dp_pctl=float(dp_pctl)
     )
 
@@ -243,6 +269,7 @@ def _branch_metrics(
         "spearman_abs_dvdt_abs_dp": float(spearman_abs),
         "coherent_sign_ratio": float(coh_ratio),
         "coherent_sign_n": int(coh_n),
+        **coh_details,
         "n_rows_used": int(len(t1)),
     }
 
@@ -394,6 +421,11 @@ def main() -> None:
         "spearman_abs_dvdt_abs_dp": float(spearman_abs),
         "coherent_sign_ratio": float(coh_ratio),
         "coherent_sign_n": int(coh_n),
+        "coherent_sign_dv_threshold": float(main_metrics["coherent_sign_dv_threshold"]),
+        "coherent_sign_dp_threshold": float(main_metrics["coherent_sign_dp_threshold"]),
+        "coherent_sign_dv_frac": float(main_metrics["coherent_sign_dv_frac"]),
+        "coherent_sign_dp_frac": float(main_metrics["coherent_sign_dp_frac"]),
+        "coherent_sign_steps": int(main_metrics["coherent_sign_steps"]),
         "dp_threshold_pctl": float(args.dp_pctl),
         "dv_threshold_pctl": float(args.dv_pctl),
         "created_utc": created_utc,
