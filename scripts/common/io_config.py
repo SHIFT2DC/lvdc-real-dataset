@@ -191,6 +191,7 @@ def load_csv(
     -----
     This loader does not resample or filter the data.
     It preserves the raw sampling behavior (including jitter) as provided.
+    The sort is stable: rows with the same timestamp keep the order they have in the file.
     """
     csv_path = dataset_config["csv_path"]
     time_col = dataset_config["time_col"]
@@ -206,7 +207,7 @@ def load_csv(
     if drop_invalid_timestamps:
         df = df.dropna(subset=[time_col])
 
-    df = df.sort_values(time_col).reset_index(drop=True)
+    df = df.sort_values(time_col, kind="stable").reset_index(drop=True)
     return df
 def ensure_dir(path: str) -> None:
     """Create a directory if it does not exist."""
