@@ -36,8 +36,8 @@ This script serves as:
 
 Inputs
 ------
-- Dataset configuration from configs/datasets.yaml (A/B/C)
-- CSV referenced by the dataset config (raw or processed)
+- Dataset configuration from configs/datasets.yaml (Datasets A and B)
+- CSV referenced by the dataset config
 
 Outputs
 -------
@@ -73,15 +73,6 @@ python3 -m scripts.examples.01_event_detection_dvdt \
     --percentile 99.9 \
     --window-s 10 \
     --related-cols auto \
-    --export-window-csv \
-    --plot
-
-# Dataset C (700 V AFE)
-python3 -m scripts.examples.01_event_detection_dvdt \
-    --dataset-id C \
-    --percentile 99.9 \
-    --window-s 10 \
-    --power-col "poweroutput" \
     --export-window-csv \
     --plot
 
@@ -489,35 +480,10 @@ def main():
     start_idx, end_idx = selected_event
     peak_idx = dvdt_abs.iloc[start_idx:end_idx + 1].idxmax()
 
-    
-    # Peak time for the plot marker
-    # ------------------------------------------------------------
-    # The maximum |dV/dt| may occur on either edge (drop or recovery).
-    # For clearer figures, mark the most "extreme" V point inside the
-    # selected event segment:
-    # - if signed dV/dt at the peak is negative -> mark min(V) in the event
-    # - if signed dV/dt at the peak is positive -> mark max(V) in the event
-    # - fallback -> mark the max-|dV/dt| instant
-
-    dvdt_seg_signed = dvdt.loc[start_idx:end_idx].astype(float)
-    v_seg = v.loc[start_idx:end_idx].astype(float)
-
-    dominant_sign = float(np.sign(dvdt_seg_signed.loc[peak_idx]))
-    
-    # Guardrail: if V hardly changes inside the event (flat segment),
-    # idxmin/idxmax is not meaningful -> use the dv/dt peak instead.
-    v_span = float(v_seg.max() - v_seg.min())
-    if not np.isfinite(v_span) or v_span < 1e-6:
-        idx_mark = int(peak_idx)
-    else:
-        if dominant_sign < 0:
-            idx_mark = int(v_seg.idxmin())
-        elif dominant_sign > 0:
-            idx_mark = int(v_seg.idxmax())
-        else:
-            idx_mark = int(peak_idx)
-
-    peak_time = t.loc[idx_mark]
+    # Mark the instant of the maximum |dV/dt| inside the selected event.
+    # |dV/dt| at row i is the change from row i-1 to row i, so this is the
+    # timestamp at the end of the steepest step. The same instant centres the window.
+    peak_time = t.loc[peak_idx]
     
     # Build a symmetric window centered on peak_time
     # args.window_s now represents TOTAL window length (not half)
