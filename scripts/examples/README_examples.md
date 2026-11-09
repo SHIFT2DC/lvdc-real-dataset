@@ -26,7 +26,7 @@ The `scripts` folders also contain empty `__init__.py` files. `CODE_VERSION.txt`
 
 ## Requirements
 
-Python 3.11 or later (tested with Python 3.13). The package versions are listed in `requirements.txt`.
+Python 3.11 or later (tested with Python 3.11 and 3.13). The package versions are listed in `requirements.txt`.
 
 ```bash
 cd lvdc_dataset_example_scripts
@@ -71,4 +71,4 @@ The |dV/dt| value of a sample is computed from the change with respect to the pr
 
 ## Dataset B
 
-Replace `--dataset-id A` with `--dataset-id B`. The selected event is at 2024-05-10 16:47:04, with a peak |dV/dt| of approximately 26.5 V/s.
+Replace `--dataset-id A` with `--dataset-id B`. The files are written to `out/B/fig5/examples/dvdt_event_example/`. The selected event is the sample at 2024-05-10 16:47:04, with a peak |dV/dt| of approximately 26.5 V/s, and the window spans 16:46:34 to 16:47:34.
