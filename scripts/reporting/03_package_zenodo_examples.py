@@ -6,77 +6,187 @@ Create the Zenodo example package for the LVDC dataset.
 Purpose
 -------
 This script packages the reproducible example used in the associated Data Descriptor
-manuscript into a ZIP archive that can be uploaded to Zenodo together with
-the dataset files.
+into a ZIP archive that can be uploaded to Zenodo together with the dataset files.
+The package runs on its own: after unzipping it, installing the requirements and
+placing the CSV files of Datasets A and B in data/raw/, the example can be executed
+without the GitHub repository.
 
-The archive contains:
+The archive contains a single top-level folder, lvdc_dataset_example_scripts/, with:
+    - README_examples.md             (from scripts/examples/README_examples.md)
+    - CODE_VERSION.txt               (generated: repository, commit, tag)
+    - requirements.txt               (from the repository root)
+    - configs/datasets.yaml          (generated: Datasets A and B from configs/datasets.yaml)
+    - data/raw/                      (empty folder for the CSV files)
+    - scripts/__init__.py
+    - scripts/common/__init__.py
+    - scripts/common/io_config.py
+    - scripts/examples/__init__.py
     - scripts/examples/01_event_detection_dvdt.py
-    - scripts/examples/README_examples.md
-
-These files provide a minimal example demonstrating how voltage transient
-events can be detected using the |dV/dt| criterion and how the representative
-event figure shown in the manuscript can be reproduced.
 
 Output
 ------
-The script generates:
-
     release/zenodo_examples/lvdc_dataset_example_scripts.zip
 
-This ZIP file can be directly uploaded to the Zenodo dataset record.
+The ZIP is reproducible: entries are written in a fixed order, with fixed permissions
+and with the commit date as file date, so the same commit gives the same ZIP.
 
 Usage
 -----
-
 From the repository root:
 
     python3 -m scripts.reporting.03_package_zenodo_examples
 
-After execution, upload the generated ZIP file to the Zenodo dataset page.
-
-Notes
------
-This script is intentionally simple and only packages the example scripts
-needed for reproducibility. It does not depend on the dataset processing
-pipeline and can be executed independently.
+By default, the script stops if tracked files have uncommitted changes, so that
+CODE_VERSION.txt always identifies the exact code in the package. Use
+--allow-dirty only for tests.
 """
 
-import shutil
+from __future__ import annotations
+
+import argparse
+import subprocess
+import sys
+import zipfile
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 
 OUT_DIR = ROOT / "release" / "zenodo_examples"
-EXAMPLES_DIR = ROOT / "scripts" / "examples"
-
 ZIP_NAME = "lvdc_dataset_example_scripts"
+TOP = ZIP_NAME
+REPOSITORY_URL = "https://github.com/SHIFT2DC/lvdc-real-dataset"
+EXAMPLE_DATASETS = ["A", "B"]
 
-def main():
+# (path inside the package, source path in the repository)
+COPIED_FILES: List[Tuple[str, str]] = [
+    ("README_examples.md", "scripts/examples/README_examples.md"),
+    ("requirements.txt", "requirements.txt"),
+    ("scripts/__init__.py", "scripts/__init__.py"),
+    ("scripts/common/__init__.py", "scripts/common/__init__.py"),
+    ("scripts/common/io_config.py", "scripts/common/io_config.py"),
+    ("scripts/examples/__init__.py", "scripts/examples/__init__.py"),
+    ("scripts/examples/01_event_detection_dvdt.py", "scripts/examples/01_event_detection_dvdt.py"),
+]
+
+
+def _git(*args: str) -> Optional[str]:
+    """Run a git command in the repository root and return its output, or None."""
+    try:
+        out = subprocess.check_output(["git", *args], cwd=ROOT, stderr=subprocess.DEVNULL)
+        return out.decode("utf-8").strip()
+    except Exception:
+        return None
+
+
+def _code_version(allow_dirty: bool) -> Tuple[str, Tuple[int, int, int, int, int, int]]:
+    """Build the CODE_VERSION.txt text and the date used for all ZIP entries."""
+    commit = _git("rev-parse", "HEAD")
+    if commit is None:
+        raise RuntimeError("Git commit not found. Run this script inside the repository.")
+
+    modified = _git("status", "--porcelain", "--untracked-files=no")
+    if modified and not allow_dirty:
+        raise RuntimeError(
+            "Tracked files have uncommitted changes. Commit them first, "
+            "or use --allow-dirty for a test package.\n" + modified
+        )
+
+    tag = _git("describe", "--tags", "--exact-match", "HEAD") or "none"
+    commit_ts = int(_git("log", "-1", "--format=%ct", "HEAD") or "315532800")
+    commit_dt = datetime.fromtimestamp(commit_ts, tz=timezone.utc)
+
+    lines = [
+        f"Repository: {REPOSITORY_URL}",
+        f"Commit: {commit}",
+        f"Commit date (UTC): {commit_dt.strftime('%Y-%m-%d %H:%M:%S')}",
+        f"Tag: {tag}",
+        "Working tree: " + ("modified (test package)" if modified else "clean"),
+        "Generated by: scripts/reporting/03_package_zenodo_examples.py",
+        "",
+    ]
+    date_time = (
+        max(commit_dt.year, 1980),
+        commit_dt.month,
+        commit_dt.day,
+        commit_dt.hour,
+        commit_dt.minute,
+        commit_dt.second,
+    )
+    return "\n".join(lines), date_time
+
+
+def _example_config() -> str:
+    """Return configs/datasets.yaml restricted to the example datasets (A and B)."""
+    with open(ROOT / "configs" / "datasets.yaml", "r", encoding="utf-8") as f:
+        full = yaml.safe_load(f)
+
+    subset: Dict[str, Dict] = {"datasets": {k: full["datasets"][k] for k in EXAMPLE_DATASETS}}
+    text = yaml.safe_dump(subset, sort_keys=False, allow_unicode=True, default_flow_style=False)
+
+    # The generated file must contain exactly the same settings for A and B.
+    if yaml.safe_load(text) != subset:
+        raise RuntimeError("The generated example configuration does not match configs/datasets.yaml.")
+
+    header = (
+        "# Configuration for the example package (Datasets A and B).\n"
+        "# Generated from configs/datasets.yaml by scripts/reporting/03_package_zenodo_examples.py.\n"
+    )
+    return header + text
+
+
+def _add_entry(zf: zipfile.ZipFile, name: str, data: Optional[bytes], date_time: Tuple[int, int, int, int, int, int]) -> None:
+    """Add a file (data is bytes) or a folder (data is None) with fixed metadata."""
+    info = zipfile.ZipInfo(name, date_time=date_time)
+    if data is None:
+        info.external_attr = (0o40755 << 16) | 0x10
+        zf.writestr(info, b"")
+    else:
+        info.external_attr = 0o100644 << 16
+        info.compress_type = zipfile.ZIP_DEFLATED
+        zf.writestr(info, data, compresslevel=9)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Create the Zenodo example package.")
+    parser.add_argument(
+        "--allow-dirty",
+        action="store_true",
+        help="Allow uncommitted changes in tracked files (test packages only).",
+    )
+    args = parser.parse_args()
+
+    try:
+        version_text, date_time = _code_version(args.allow_dirty)
+    except RuntimeError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    files: Dict[str, bytes] = {}
+    for inner, source in COPIED_FILES:
+        files[inner] = (ROOT / source).read_bytes()
+    files["CODE_VERSION.txt"] = version_text.encode("utf-8")
+    files["configs/datasets.yaml"] = _example_config().encode("utf-8")
+
+    folders = sorted({str(Path(p).parent) for p in files if str(Path(p).parent) != "."} | {"data", "data/raw"})
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    tmp_dir = OUT_DIR / "examples"
-
-    if tmp_dir.exists():
-        shutil.rmtree(tmp_dir)
-
-    tmp_dir.mkdir()
-
-    shutil.copy(EXAMPLES_DIR / "01_event_detection_dvdt.py", tmp_dir)
-    shutil.copy(EXAMPLES_DIR / "README_examples.md", tmp_dir)
-
-    zip_path = shutil.make_archive(
-        str(OUT_DIR / ZIP_NAME),
-        "zip",
-        root_dir=OUT_DIR,
-        base_dir="examples",
-    )
-
-    shutil.rmtree(tmp_dir)
+    zip_path = OUT_DIR / f"{ZIP_NAME}.zip"
+    with zipfile.ZipFile(zip_path, "w") as zf:
+        _add_entry(zf, f"{TOP}/", None, date_time)
+        for folder in folders:
+            _add_entry(zf, f"{TOP}/{folder}/", None, date_time)
+        for inner in sorted(files):
+            _add_entry(zf, f"{TOP}/{inner}", files[inner], date_time)
 
     print("Zenodo example package created:")
-    print(zip_path)
+    print(zip_path.relative_to(ROOT))
+    print(version_text)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
