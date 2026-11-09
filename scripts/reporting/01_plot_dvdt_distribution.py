@@ -18,9 +18,9 @@ Important notes
 ---------------
 - dV/dt uses the raw sampling (no resampling).
 - If dt = 0 (duplicate timestamps), dV/dt becomes inf. We filter non-finite values.
-- For visualization, we clip the x-axis to a high percentile to avoid outliers
-  compressing the plot. This does not change computed percentiles; it only
-  changes the displayed range.
+- The x-axis upper limit is set from --x-max-percentile (default: 100, full range).
+  A lower value only limits the displayed range; the CCDF and the percentiles
+  are always computed from all finite values.
 
 Usage examples (run from repository root)
 -----------------------------------------
@@ -230,8 +230,8 @@ def main() -> None:
     parser.add_argument("--bins", type=int, default=150,
                         help="Number of bins for histogram mode")
 
-    parser.add_argument("--x-max-percentile", type=float, default=99.95,
-                        help="Percentile used to clip the x-axis for visualization")
+    parser.add_argument("--x-max-percentile", type=float, default=100.0,
+                        help="Percentile used to set the x-axis upper limit (default: 100, full range)")
 
     parser.add_argument("--font-size", type=int, default=11)
     parser.add_argument("--fig-width", type=float, default=7.0)
@@ -352,7 +352,7 @@ def main() -> None:
     for ax, dataset_id in zip(axes, args.datasets):
 
         x = dvdt_by_ds[dataset_id]
-        # Clip only for visualization
+        # Values within the x-axis limit (used only by the histogram mode)
         x_vis = x[(x >= 0) & (x <= x_max)]
 
         if args.mode == "hist":
@@ -370,7 +370,8 @@ def main() -> None:
 
 
         else:
-            xs, ccdf = compute_ccdf(x_vis)
+            # The CCDF uses all finite values; the x-axis limit only changes what is shown
+            xs, ccdf = compute_ccdf(x)
             style_ds = dataset_style.get(dataset_id, {})
             ax.plot(
                 xs,
