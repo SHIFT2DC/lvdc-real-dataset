@@ -30,6 +30,7 @@
 # 6) reporting/01_plot_dvdt_distribution.py
 # 7) reporting/02_generate_latex_table_events.py
 # 8) reporting/04_generate_dataset_overview_figures.py
+#    and reporting/05_compose_dataset_overview_AB.py (Figure 3, Datasets A and B)
 # 9) examples/01_event_detection_dvdt.py
 #
 # Notes
@@ -193,6 +194,7 @@ echo
 # This stage generates:
 # - raw signal overview figures
 # - variable-category distribution figures
+# - combined raw signal figure for Datasets A and B (raw_signals_AB.pdf)
 # ---------------------------------------------------------------------------
 echo "[8/9] Running reporting stage 04: dataset overview figures"
 
@@ -234,6 +236,13 @@ for DS in $DATASETS; do
     --dist-fig-height 2.2
 
 done
+
+# Figure 3: one PDF with the raw signal figures of Datasets A and B, labelled (a) and (b).
+# The individual figures are only read. Runs only when DATASETS includes A and B.
+if [[ " $DATASETS " == *" A "* && " $DATASETS " == *" B "* ]]; then
+  echo "  -> Composing raw_signals_AB.pdf (Datasets A and B)"
+  python3 -m scripts.reporting.05_compose_dataset_overview_AB --run-id "$RUN_ID"
+fi
 
 echo
 
