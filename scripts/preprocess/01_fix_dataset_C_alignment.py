@@ -8,9 +8,13 @@ Fix column misalignment in Dataset C (700 V AFE) in a reproducible way.
 
 Context
 -------
-The raw log may contain event-marker rows (e.g., CONNECTION_RESTORED) and may switch the
-ordering of numeric fields after reconnection events. We keep the raw file unchanged and
-generate an aligned CSV under data/processed/ for analysis and figure generation.
+The raw file contains 12 event-marker rows (Timestamp,CONNECTION_RESTORED). The first
+14 data rows follow the header order. In the data rows after the second marker row
+(file line 17), the numeric fields appear in the order poweroutput, upstreamvoltage,
+upstreamcurrent, temperature, systemstate. This order was inferred from the data,
+using the relation between power, voltage and current; it has not been confirmed by
+the data provider. We keep the raw file unchanged and generate an aligned CSV under
+data/processed/ for analysis and figure generation.
 
 How to run
 ----------
@@ -24,6 +28,8 @@ Output
 ------
 - Aligned CSV with canonical column order:
   Timestamp,temperature,systemstate,poweroutput,upstreamvoltage,upstreamcurrent
+  Marker rows are not written. Each data row is classified from the value ranges of
+  its fields (see detect_layout). Line endings are CRLF (csv module default).
 - A short console summary with counts.
 """
 
@@ -60,7 +66,7 @@ def is_int_like(x: str) -> bool:
 
 
 def looks_like_temperature(x: str) -> bool:
-    # Based on your description: 25..27, integer-like
+    # Integer-like value in a broad range; the recording contains values from 25 to 28.
     v = to_float(x)
     if v is None:
         return False
@@ -68,7 +74,7 @@ def looks_like_temperature(x: str) -> bool:
 
 
 def looks_like_systemstate(x: str) -> bool:
-    # Small integer state, usually 0..10 (adjust if needed)
+    # Integer-like value in a broad range; systemstate is 3 throughout the recording.
     v = to_float(x)
     if v is None:
         return False
@@ -89,12 +95,12 @@ def detect_layout(fields_6: list[str]) -> str:
     Canonical:
       ts, temp, state, power, volt, curr
 
-    Rotated (observed after reconnection):
+    Rotated (observed in the data rows after the second marker row, file line 17):
       ts, power, volt, curr, temp, state
     """
     ts, f1, f2, f3, f4, f5 = fields_6
 
-    # Canonical signature: temp ~ 25..27 (int), state small int, volt ~ 700
+    # Canonical signature: temp integer-like, state small integer, volt ~ 700
     canonical_ok = (
         looks_like_temperature(f1)
         and looks_like_systemstate(f2)
