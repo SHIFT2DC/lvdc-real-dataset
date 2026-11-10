@@ -22,8 +22,8 @@ The record includes three datasets corresponding to different LVDC operating con
 - **Dataset B – LVDC 380 V, battery on (buffered)**  
   Measurements acquired from the same installation under comparable load conditions, but with an active battery energy storage system connected to the DC bus, providing voltage buffering.
 
-- **Dataset C – LVDC 700 V AFE (complementary dataset)** 
-  Measurements acquired from a separate 700 V DC active front-end (AFE) installation, included as a complementary reference dataset.
+- **Dataset C – LVDC 700 V AFE (complementary dataset)**  
+  Measurements from a separate 700 V DC installation, logged by a solid-state circuit breaker (SCCB) connected next to an active front-end (AFE) converter, included as a complementary reference dataset. In the data rows after file line 17 of the CSV file, the values do not follow the column order of the header. The order inferred from the data, a derived file with the header order, and the scripts to reproduce and check it are described in the Dataset C metadata file; the derived file and the scripts are in the GitHub repository listed under Related resources.
 
 ---
 
