@@ -293,9 +293,9 @@ def main() -> None:
     }
     # Compact subplot titles for paper-ready figures
     panel_title = {
-        "A": "(a) battery OFF",
-        "B": "(b) battery ON",
-        "C": "(c) complementary",
+        "A": r"($\mathbf{a}$) battery OFF",
+        "B": r"($\mathbf{b}$) battery ON",
+        "C": r"($\mathbf{c}$) complementary",
     }
     # Percentile marker styling (fixed colors for reproducibility)
     percentile_style = {
