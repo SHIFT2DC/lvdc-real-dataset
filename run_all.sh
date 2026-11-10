@@ -26,6 +26,7 @@
 # 2) validation/02_sampling_stability_dt.py
 # 3) validation/03_event_characterization_dvdt.py
 # 4) validation/04_cross_signal_consistency.py
+#    and validation/06_timestamp_handling_sensitivity.py (CSR with and without dt = 0 steps)
 # 5) validation/05_data_overview_summary.py
 # 6) reporting/01_plot_dvdt_distribution.py
 # 7) reporting/02_generate_latex_table_events.py
@@ -126,6 +127,8 @@ echo
 # Stage 04
 # Cross-signal consistency between Vbus and power-related signals.
 # This stage uses the same RUN_ID to stay aligned with Stage 03.
+# It also runs the sensitivity check of the CSR to the steps with dt = 0
+# (repeated timestamps in Dataset B), for Datasets A and B only.
 # ---------------------------------------------------------------------------
 echo "[4/9] Running validation stage 04: cross-signal consistency"
 for DS in $DATASETS; do
@@ -133,6 +136,15 @@ for DS in $DATASETS; do
   python3 -m scripts.validation.04_cross_signal_consistency \
     --dataset-id "$DS" \
     --run-id "$RUN_ID"
+done
+
+for DS in $DATASETS; do
+  if [ "$DS" = "A" ] || [ "$DS" = "B" ]; then
+    echo "  -> Dataset $DS: CSR sensitivity to dt = 0 steps"
+    python3 -m scripts.validation.06_timestamp_handling_sensitivity \
+      --datasets "$DS" \
+      --run-id "$RUN_ID"
+  fi
 done
 
 echo
