@@ -4,7 +4,7 @@
 
 This dataset contains real-world time-series measurements acquired from an operational hybrid AC/DC electrical installation with a nominal low-voltage direct current (LVDC) bus of 380 V. The data were collected within the context of the SHIFT2DC project and reflect normal operation of the installation during an extended continuous period.
 
-The dataset corresponds to a measurement campaign carried out on 2 May 2025. During this period, the battery energy storage system connected to the DC bus was present but not operational due to a reported fault condition. As a result, the recorded DC bus behaviour represents an unbuffered operating regime, where voltage variations are mainly driven by load changes and power electronic converter operation.
+The dataset corresponds to a measurement campaign carried out on 2 May 2025. During this period, the battery energy storage system connected to the DC bus was present but not operational due to a reported fault condition. The battery current (`BAT I`) is 0 A throughout the recording. Dataset B was recorded on 10 May 2024 under different power conditions, so differences between the two recordings cannot be attributed to the battery alone.
 
 This dataset is intended to support research on LVDC monitoring, event detection, and data-driven analysis under realistic operating conditions.
 
@@ -12,13 +12,13 @@ This dataset is intended to support research on LVDC monitoring, event detection
 
 Measurements were acquired from an industrial hybrid AC/DC installation operated by an industrial partner involved in the SHIFT2DC project. The system includes an AC grid connection, multiple AC and DC loads, and a DC distribution network regulated using droop control.
 
-The nominal DC bus voltage is 380 V, with typical operating values observed between approximately 370 V and 400 V. During the recording period, no active battery buffering was present, allowing natural voltage variations to appear in response to load dynamics.
+The nominal DC bus voltage is 380 V. According to the data provider, the DC bus voltage is regulated by droop control between 370 V and 400 V. In this recording, the DC bus voltage (`NRE DCbus U`) ranges from 374.3 V to 398.5 V.
 
 All measurements reflect normal operation of the installation and were not obtained through a dedicated experimental campaign designed by the authors.
 
 ## Time coverage and format
 
-The dataset is provided as a single comma-separated values (CSV) file containing time-stamped measurements. Timestamps are expressed in a human-readable format (YYYY-MM-DD HH:MM:SS) and represent the local system time of the logging device.
+The dataset is provided as a single comma-separated values (CSV) file containing time-stamped measurements. Timestamps are expressed in a human-readable format (YYYY-MM-DD HH:MM:SS). The time zone and the clock source of the logging device have not been documented by the data provider.
 
 The nominal sampling interval is approximately 1 second, with minor timing variations typical of industrial logging systems. No temporal resampling or interpolation has been applied.
 
@@ -48,7 +48,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 | PV Carport Pges | Active power from PV carport installation | W |
 | PV Werkstatt Pges | Active power from PV workshop installation | W |
 | NRE DCbus U | DC bus voltage at the main LVDC node | V |
-| NRE K1 P1 | Power of DC/DC converter branch K1. In this dataset, values are consistently negative, indicating power consumption from the DC bus (load-side operation) | W |
+| NRE K1 P1 | Power of DC/DC converter branch K1. In this dataset, values are negative throughout the recording (-242 to -209 W). The sign convention has not been documented by the data provider | W |
 | NRE K4 P1 | Power of DC/DC converter branch K4, associated with a vertical PV installation | W |
 | NRE K6 P1 | Power of DC/DC converter branch K6, associated with a vertical PV installation | W |
 | Nachladung P | AC/DC infeed active power reported by the monitoring system (see note below) | W |
