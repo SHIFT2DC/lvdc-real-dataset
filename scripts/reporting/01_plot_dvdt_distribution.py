@@ -8,7 +8,7 @@ Why this exists
 In Technical Validation we want to:
 - Show the empirical distribution of |dV/dt| derived from real timestamps.
 - Justify percentile-based thresholds used for simple transient detection.
-- Compare unbuffered (A) vs buffered (B) operation, and optionally dataset C.
+- Compare Dataset A (battery off) and Dataset B (battery on), and optionally dataset C.
 
 Two plot modes are supported:
 - hist: histogram (density) plotted as step lines (clean in PDF/SVG)
