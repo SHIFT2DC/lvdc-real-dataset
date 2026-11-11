@@ -5,7 +5,7 @@ check_dataset_LVDC_380V_hybrid_ACDC_battery_off_2025_05_02.py
 Purpose
 -------
 Legacy exploratory script used during early inspection of the
-original LVDC 380 V hybrid AC/DC dataset without battery buffering.
+original LVDC 380 V hybrid AC/DC dataset with the battery off (Dataset A).
 
 This script scans the raw CSV, identifies relevant dV/dt excursions,
 and generates diagnostic plots for manual inspection.
