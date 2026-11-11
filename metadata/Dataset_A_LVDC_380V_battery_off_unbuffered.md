@@ -4,7 +4,7 @@
 
 This dataset contains real-world time-series measurements acquired from an operational hybrid AC/DC electrical installation with a nominal low-voltage direct current (LVDC) bus of 380 V. The data were collected within the context of the SHIFT2DC project and reflect normal operation of the installation during an extended continuous period.
 
-The dataset corresponds to a measurement campaign carried out on 2 May 2025. During this period, the battery energy storage system connected to the DC bus was present but not operational due to a reported fault condition. The battery current (`BAT I`) is 0 A throughout the recording. Dataset B was recorded on 10 May 2024 under different power conditions, so differences between the two recordings cannot be attributed to the battery alone.
+The dataset corresponds to a measurement campaign carried out on 2 May 2025. According to the data provider, the battery energy storage system of the installation did not operate during this recording. The battery current (`BAT I`) is 0 A throughout the recording. Dataset B was recorded on 10 May 2024 under different power conditions, so differences between the two recordings cannot be attributed to the battery alone.
 
 This dataset is intended to support research on LVDC monitoring, event detection, and data-driven analysis under realistic operating conditions.
 
@@ -77,7 +77,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 
 ## Notes on battery-related signals
 
-Although battery-related variables are included in the dataset, the battery system was not operational during the acquisition period. These signals therefore reflect static or inactive states and should not be interpreted as active battery participation in the LVDC control.
+Battery-related variables are included in the dataset. During this recording, `BAT I` and `BAT SoP` are 0 throughout and `BAT SoC` remains at 89%, whereas `BAT U`, `BAT T`, `BAT SoCP` and `BAT SoOP` change over time. These signals should therefore not be interpreted as active battery participation in the LVDC control.
 
 The presence of these variables allows structural consistency with other datasets acquired from the same installation under different operating conditions.
 
