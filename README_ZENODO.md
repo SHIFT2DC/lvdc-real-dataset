@@ -16,11 +16,11 @@ This record also includes a reproducible Python example script used to detect vo
 
 The record includes three datasets corresponding to different LVDC operating conditions:
 
-- **Dataset A – LVDC 380 V, battery off (unbuffered)**  
-  Measurements acquired from a hybrid AC/DC installation operating at a nominal DC bus voltage of 380 V without active battery participation. Voltage dynamics are driven by load changes and converter operation.
+- **Dataset A – LVDC 380 V, battery off**  
+  Measurements acquired on 2 May 2025 from a hybrid AC/DC installation with a nominal DC bus voltage of 380 V. The battery current (`BAT I`) was 0 A throughout the recording.
 
-- **Dataset B – LVDC 380 V, battery on (buffered)**  
-  Measurements acquired from the same installation under comparable load conditions, but with an active battery energy storage system connected to the DC bus, providing voltage buffering.
+- **Dataset B – LVDC 380 V, battery on**  
+  Measurements acquired on 10 May 2024 from the same installation, with the battery energy storage system in operation according to the data provider. The two recordings were made on different dates and under different power conditions, so differences between Datasets A and B cannot be attributed to the battery alone.
 
 - **Dataset C – LVDC 700 V AFE (complementary dataset)**  
   Measurements from a separate 700 V DC installation, logged by a solid-state circuit breaker (SCCB) connected next to an active front-end (AFE) converter, included as a complementary reference dataset. In the data rows after file line 17 of the CSV file, the values do not follow the column order of the header. The order inferred from the data, a derived file with the header order, and the scripts to reproduce and check it are described in the Dataset C metadata file; the derived file and the scripts are in the GitHub repository listed under Related resources.
