@@ -25,11 +25,11 @@ Real-world time-series measurements from operational low-voltage direct current 
 
 | ID | Installation | Battery | Date | Sampling | Duration |
 |----|-------------|---------|------|----------|----------|
-| **A** | 380 V hybrid AC/DC | Off (fault condition) | 2025-05-02 | ~1 s | 24 h |
-| **B** | 380 V hybrid AC/DC | On (active) | 2024-05-10 | ~1 s | 24 h |
+| **A** | 380 V hybrid AC/DC | Off | 2025-05-02 | ~1 s | 24 h |
+| **B** | 380 V hybrid AC/DC | On | 2024-05-10 | ~1 s | 24 h |
 | **C** | 700 V AFE | — | 2025-12-15 to 2025-12-17 | ~1 s | 33.6 h (with gaps) |
 
-Datasets A and B capture the same installation under different battery operating conditions, enabling controlled comparison between **unbuffered** and **buffered** LVDC operation. Dataset C is an independent complementary record from a second industrial partner at a higher voltage level.
+Datasets A and B were recorded at the same installation on different dates, with the battery off (A) and on (B). The power conditions also differ between the two recordings, so differences between A and B cannot be attributed to the battery alone. Dataset C is an independent complementary record from a second industrial partner at a higher voltage level.
 
 Signal descriptions, units, and acquisition context for each dataset are provided in the `metadata/` directory.
 
@@ -105,8 +105,8 @@ See `scripts/examples/README_examples.md` for additional usage details.
 
 | Dataset | Observation |
 |---------|-------------|
-| **A** | No duplicated timestamps. ~30.9% of consecutive DC bus voltage samples are identical, consistent with steady-state operation and measurement quantisation. |
-| **B** | 1,440 duplicated timestamps (1.67%) occurring systematically at second 54 of each minute, attributed to the logging mechanism. Temporal sequence remains monotonic. |
+| **A** | No duplicated timestamps. ~30.9% of consecutive DC bus voltage samples are identical. |
+| **B** | 1,440 duplicated timestamps (1.67%): in every minute, second :53 is missing and second :54 appears twice, and the two rows of each pair are not identical. The cause has not been documented by the data provider. Temporal sequence remains monotonic. |
 | **C** | The raw CSV contains 12 CONNECTION_RESTORED entries. In the data rows after the second one (file line 17), the values do not follow the column order of the header; the order is inferred from the data and has not been confirmed by the data provider. `scripts/preprocess/01_fix_dataset_C_alignment.py` writes a derived file with the header order to `data/processed/`, and `scripts/preprocess/02_check_dataset_C_column_order.py` checks it independently. The raw file is not modified. Details are given in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`. |
 
 All validation results are reproducible via `scripts/validation/` using `run_all.sh`.
@@ -118,7 +118,7 @@ All validation results are reproducible via `scripts/validation/` using `run_all
 - Analysis of LVDC voltage dynamics and event characterisation at the monitoring timescale (1 s)
 - Development and benchmarking of event detection methods based on voltage and derived signals (e.g. dV/dt)
 - Validation of data-driven models under realistic measurement noise and sampling irregularities
-- Comparative studies between buffered and unbuffered LVDC operating conditions
+- Comparison of recordings with the battery off and on, taking into account the different recording dates and power conditions
 
 ---
 
