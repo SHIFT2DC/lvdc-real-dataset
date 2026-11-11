@@ -4,7 +4,7 @@
 
 This dataset contains real-world time-series measurements acquired from an operational hybrid AC/DC electrical installation with a nominal low-voltage direct current (LVDC) bus of 380 V. The data were collected within the context of the SHIFT2DC project and reflect normal operation of the installation during a continuous measurement period.
 
-The dataset corresponds to a measurement campaign carried out on 10 May 2024. According to the data provider, the battery energy storage system connected to the DC bus was in operation at that time. The battery current (`BAT I`) is non-zero in 56528 of the 86399 samples (65.43%), with values from -3.9 A to 9.8 A. Dataset A was recorded on 2 May 2025 under different power conditions, so differences between the two recordings cannot be attributed to the battery alone.
+The dataset corresponds to a measurement campaign carried out on 10 May 2024. According to the data provider, the battery energy storage system of the installation was in operation at that time. The battery current (`BAT I`) is non-zero in 56528 of the 86399 samples (65.43%), with values from -3.9 A to 9.8 A. Dataset A was recorded on 2 May 2025 under different power conditions, so differences between the two recordings cannot be attributed to the battery alone.
 
 This dataset is intended to support research on LVDC monitoring, event detection, and data-driven analysis under realistic operating conditions. It can be compared with Dataset A, taking into account the different recording dates and power conditions.
 
@@ -79,7 +79,7 @@ The dataset includes electrical measurements from both the AC and DC sides of th
 
 ## Notes on battery-related signals
 
-In contrast to Dataset A, the battery-related variables in this dataset change during the recording; for example, the battery current (`BAT I`) takes both positive and negative values. The sign convention of `BAT I` has not been documented by the data provider.
+In contrast to Dataset A, where `BAT I` and `BAT SoP` are 0 throughout, the battery current (`BAT I`) in this dataset takes both positive and negative values and `BAT SoC` ranges from 22% to 73%. The sign convention of `BAT I` has not been documented by the data provider.
 
 The exact internal control logic of the battery system is not described in this dataset and may depend on proprietary implementation details of the industrial installation.
 
