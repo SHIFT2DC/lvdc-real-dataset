@@ -27,7 +27,7 @@ Real-world time-series measurements from operational low-voltage direct current 
 |----|-------------|---------|------|----------|----------|
 | **A** | 380 V hybrid AC/DC | Off (fault condition) | 2025-05-02 | ~1 s | 24 h |
 | **B** | 380 V hybrid AC/DC | On (active) | 2024-05-10 | ~1 s | 24 h |
-| **C** | 700 V AFE | — | 2025-12-15 | ~1 s | Complementary |
+| **C** | 700 V AFE | — | 2025-12-15 to 2025-12-17 | ~1 s | 33.6 h (with gaps) |
 
 Datasets A and B capture the same installation under different battery operating conditions, enabling controlled comparison between **unbuffered** and **buffered** LVDC operation. Dataset C is an independent complementary record from a second industrial partner at a higher voltage level.
 
@@ -49,7 +49,7 @@ Signal descriptions, units, and acquisition context for each dataset are provide
 │   ├── validation/                 # Reproducible validation pipeline (01–05)
 │   ├── reporting/                  # Figure and table generation scripts
 │   ├── examples/                   # Standalone example scripts
-│   ├── preprocess/                 # Dataset C alignment fix
+│   ├── preprocess/                 # Dataset C alignment script and independent check
 │   └── common/                     # Shared utilities and I/O configuration
 ├── figures/                        # Selected figures for documentation and manuscript
 │   └── logos/                      # Partner and project logos
@@ -107,7 +107,7 @@ See `scripts/examples/README_examples.md` for additional usage details.
 |---------|-------------|
 | **A** | No duplicated timestamps. ~30.9% of consecutive DC bus voltage samples are identical, consistent with steady-state operation and measurement quantisation. |
 | **B** | 1,440 duplicated timestamps (1.67%) occurring systematically at second 54 of each minute, attributed to the logging mechanism. Temporal sequence remains monotonic. |
-| **C** | Original log contains structural event markers and a field-order switch after reconnection events. A reproducible alignment script is provided (`scripts/preprocess/01_fix_dataset_C_alignment.py`). The aligned output is stored in `data/processed/`. |
+| **C** | The raw CSV contains 12 CONNECTION_RESTORED entries. In the data rows after the second one (file line 17), the values do not follow the column order of the header; the order is inferred from the data and has not been confirmed by the data provider. `scripts/preprocess/01_fix_dataset_C_alignment.py` writes a derived file with the header order to `data/processed/`, and `scripts/preprocess/02_check_dataset_C_column_order.py` checks it independently. The raw file is not modified. Details are given in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`. |
 
 All validation results are reproducible via `scripts/validation/` using `run_all.sh`.
 
