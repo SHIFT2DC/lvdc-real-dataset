@@ -17,8 +17,8 @@ The `processed/` folder contains a derived version of Dataset C
 rows after the second CONNECTION_RESTORED entry (file line 17) do not follow
 the column order of the header. The derived file contains the 122109 data rows
 in the column order of the header and omits the 12 CONNECTION_RESTORED
-entries. This column order is inferred from the data and has not been
-confirmed by the data provider; it can be checked with
+entries. The order of the values in the raw rows is determined from the data,
+using the relation between power, voltage and current, and can be checked with
 `scripts/preprocess/02_check_dataset_C_column_order.py`. The raw file is not
 modified. Details are given in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`.
 Datasets A and B do not require preprocessing and are used directly from

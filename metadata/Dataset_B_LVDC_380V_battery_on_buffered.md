@@ -12,7 +12,7 @@ This dataset is intended to support research on LVDC monitoring, event detection
 
 Measurements were acquired from an industrial hybrid AC/DC installation operated by an industrial partner of the SHIFT2DC project. The system includes an AC grid connection, multiple AC and DC loads, photovoltaic generation units, a battery energy storage system, and a DC distribution network regulated using droop control.
 
-The nominal DC bus voltage is 380 V. In this recording, `NRE DCbus U` ranges from 348.1 V to 398.0 V, with 39129 of 86399 samples (45.29%) below 370 V. The data provider described a 370–400 V droop-control range when supplying Dataset A; whether the same settings applied to this recording has not been confirmed.
+The nominal DC bus voltage is 380 V. In this recording, `NRE DCbus U` ranges from 348.1 V to 398.0 V, and 39129 of 86399 samples (45.29%) are below 370 V, the lower limit of the droop-control range given by the data provider for Dataset A.
 
 All measurements reflect normal operational conditions of the installation and were not obtained through a dedicated experimental campaign designed by the authors.
 

@@ -106,8 +106,8 @@ See `scripts/examples/README_examples.md` for additional usage details.
 | Dataset | Observation |
 |---------|-------------|
 | **A** | No duplicated timestamps. ~30.9% of consecutive DC bus voltage samples are identical. |
-| **B** | 1,440 duplicated timestamps (1.67%): in every minute, second :53 is missing and second :54 appears twice, and the two rows of each pair are not identical. The cause has not been documented by the data provider. Temporal sequence remains monotonic. |
-| **C** | The raw CSV contains 12 CONNECTION_RESTORED entries. In the data rows after the second one (file line 17), the values do not follow the column order of the header; the order is inferred from the data and has not been confirmed by the data provider. `scripts/preprocess/01_fix_dataset_C_alignment.py` writes a derived file with the header order to `data/processed/`, and `scripts/preprocess/02_check_dataset_C_column_order.py` checks it independently. The raw file is not modified. Details are given in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`. |
+| **B** | 1,440 duplicated timestamps (1.67%): in every minute, second :53 is missing and second :54 appears twice, and the two rows of each pair are not identical. Temporal sequence remains monotonic. |
+| **C** | The raw CSV contains 12 CONNECTION_RESTORED entries. In the data rows after the second one (file line 17), the values do not follow the column order of the header; the order is determined from the data, using the relation between power, voltage and current. `scripts/preprocess/01_fix_dataset_C_alignment.py` writes a derived file with the header order to `data/processed/`, and `scripts/preprocess/02_check_dataset_C_column_order.py` checks it independently. The raw file is not modified. Details are given in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`. |
 
 All validation results are reproducible via `scripts/validation/` using `run_all.sh`.
 

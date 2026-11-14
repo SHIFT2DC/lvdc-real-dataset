@@ -43,7 +43,7 @@ In addition to numerical measurements, the file contains 12 text entries (CONNEC
 
 ## Column order
 
-The header lists the columns in the order Timestamp, temperature, systemstate, poweroutput, upstreamvoltage, upstreamcurrent. Only the first 14 data rows (file lines 3 to 16; 2025-12-15 17:26:29.132 to 17:26:42.132) follow this order. In the data rows after the second CONNECTION_RESTORED entry (file line 17, 2025-12-15 17:26:50.827), that is 122095 of the 122109 data rows, the values are consistent with the order poweroutput, upstreamvoltage, upstreamcurrent, temperature, systemstate. With this order, the power equals the product of voltage and current divided by 1000 within 0.05 in 121545 of the 122109 data rows (99.54%). Read in the header order, none of the 122095 rows after file line 17 satisfies this relation. The 564 rows that do not satisfy it are kept in both files. This column order is inferred from the data and has not been confirmed by the data provider. The CSV file is provided as recorded.
+The header lists the columns in the order Timestamp, temperature, systemstate, poweroutput, upstreamvoltage, upstreamcurrent. Only the first 14 data rows (file lines 3 to 16; 2025-12-15 17:26:29.132 to 17:26:42.132) follow this order. In the data rows after the second CONNECTION_RESTORED entry (file line 17, 2025-12-15 17:26:50.827), that is 122095 of the 122109 data rows, the values are consistent with the order poweroutput, upstreamvoltage, upstreamcurrent, temperature, systemstate. With this order, the power equals the product of voltage and current divided by 1000 within 0.05 in 121545 of the 122109 data rows (99.54%). Read in the header order, none of the 122095 rows after file line 17 satisfies this relation. The 564 rows that do not satisfy it are kept in both files. The column mapping used to create the derived file was determined from these checks on the raw data. The CSV file is provided as recorded.
 
 The code repository (https://github.com/SHIFT2DC/lvdc-real-dataset) contains:
 
@@ -61,7 +61,7 @@ python3 -m scripts.preprocess.02_check_dataset_C_column_order
 
 ## Notes on system state and event entries
 
-The systemstate column has the value 3 in all data rows. The data provider listed the possible states as off, standby, connecting, on and tripped/failed, in this order, but did not give their numeric codes. If the list is numbered from zero, the value 3 would correspond to on; this correspondence has not been confirmed by the data provider.
+The systemstate column has the value 3 in all data rows. The data provider listed the possible states as off, standby, connecting, on and tripped/failed, in this order, but did not give their numeric codes. If the list is numbered from zero, the value 3 would correspond to on.
 
 The file contains 12 rows in which the timestamp is followed only by the text CONNECTION_RESTORED. The meaning of these entries has not been documented by the data provider. They are preserved in the CSV file as recorded; the derived file in the code repository does not include them.
 
