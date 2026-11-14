@@ -46,14 +46,14 @@ Signal descriptions, units, and acquisition context for each dataset are provide
 │   └── original_from_partners/     # Original files as received, preserved for traceability
 ├── metadata/                       # Signal descriptions, units, and acquisition context
 ├── scripts/
-│   ├── validation/                 # Reproducible validation pipeline (01–05)
+│   ├── validation/                 # Reproducible validation pipeline (01–06)
 │   ├── reporting/                  # Figure and table generation scripts
 │   ├── examples/                   # Standalone example scripts
 │   ├── preprocess/                 # Dataset C alignment script and independent check
 │   └── common/                     # Shared utilities and I/O configuration
 ├── figures/                        # Selected figures for documentation and manuscript
 │   └── logos/                      # Partner and project logos
-├── release/                        # Packaged example scripts for Zenodo release
+├── release/                        # Created by package_zenodo_examples.sh: example ZIP for Zenodo (not tracked)
 ├── run_all.sh                      # Entry point for the full validation pipeline
 ├── requirements.txt                # Python dependencies
 ├── README_ZENODO.md                # Description file included in the Zenodo record
@@ -93,7 +93,7 @@ bash run_all.sh
 python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id A \
     --percentile 99.9 \
-    --window-s 30 \
+    --window-s 60 \
     --plot
 ```
 
@@ -127,7 +127,7 @@ All validation results are reproducible via `scripts/validation/` using `run_all
 If you use this dataset, please cite:
 
 ```
-Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldaña, J. (2026).
+Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldana, J. (2026).
 A real-world low-voltage direct current (LVDC) dataset for event-driven
 monitoring and signal prioritization. Zenodo.
 https://doi.org/10.5281/zenodo.18524234

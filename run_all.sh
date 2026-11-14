@@ -37,7 +37,8 @@
 # Notes
 # -----
 # - The example script scripts/examples/01_event_detection_dvdt.py is not part
-#   of the core validation pipeline. It is left as an optional block below.
+#   of the core validation pipeline. It runs as the last stage (9) and
+#   writes the example outputs for Datasets A and B.
 # - This script should be executed from the repository root.
 # - It assumes the individual stage scripts are already working when called
 #   directly on their own.

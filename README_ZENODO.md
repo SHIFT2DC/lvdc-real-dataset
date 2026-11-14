@@ -87,7 +87,7 @@ This record also includes a small reproducible example script provided as:
 
 The example demonstrates how voltage transient events can be detected in the LVDC datasets using a simple |dV/dt| based metric.
 
-The script reproduces the type of event window visualization used in the associated dataset descriptor and can be used as a starting point for further analysis of LVDC voltage dynamics.
+With the command given in the included `README_examples.md` file, the script reproduces the event window figure of the associated Data Descriptor from Dataset A. The ZIP file also contains a `requirements.txt` file, the configuration of Datasets A and B, and a `CODE_VERSION.txt` file that identifies the version of the code in the GitHub repository from which the package was generated. The CSV files are not included in the ZIP file: they are downloaded from this record and placed in the `data/raw/` folder, as described in `README_examples.md`. The script can also be run on Dataset B and used as a starting point for further analysis of LVDC voltage dynamics.
 
 ## Funding
 
@@ -99,7 +99,7 @@ This work was supported by the European Commission under the SHIFT2DC project (G
 
 If you use this dataset, please cite:
 
-Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldaña, J. (2026).
+Arroyo-Valle, F. J., Drexler, K., Roger, S., & Saldana, J. (2026).
 A real-world low-voltage direct current (LVDC) dataset for event-driven monitoring and signal prioritization [Data set].
 Zenodo. https://doi.org/10.5281/zenodo.18524234
 
