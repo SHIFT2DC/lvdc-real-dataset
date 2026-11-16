@@ -188,7 +188,7 @@ echo
 
 # ---------------------------------------------------------------------------
 # Reporting 02
-# Paper-ready LaTeX table for extreme |dV/dt| event statistics.
+# Paper-ready LaTeX table of candidate |dV/dt| events (Table 2).
 # Caption and label are passed explicitly for consistent manuscript output.
 # This stage reads the Stage 03 outputs identified by the shared RUN_ID.
 # ---------------------------------------------------------------------------
