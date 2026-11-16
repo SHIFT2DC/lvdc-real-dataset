@@ -1,21 +1,24 @@
 """
 01_event_detection_dvdt.py
 
-Minimal transient event detection and visualization example based on |dV/dt|
+Minimal example of candidate event detection and visualization based on |dV/dt|
 (Scientific Data - Usage Example / Functional Validation)
 
 Purpose
 -------
 This script provides a minimal, fully reproducible example illustrating how
-extreme voltage transients can be programmatically detected and inspected
-in the LVDC datasets.
+candidate voltage events can be detected with a percentile threshold on |dV/dt|
+and inspected in the LVDC datasets. |dV/dt| is computed between consecutive
+rows (about 1 s apart), so the example describes changes at the logging
+interval, not faster converter transients. The detected events are not
+labelled or independently verified.
 
 It demonstrates:
 
 1) Computation of dV/dt from DC bus voltage.
-2) Definition of an "extreme" threshold using a percentile of |dV/dt|.
-3) Detection of contiguous transient events.
-4) Automatic selection of a representative event (maximum |dV/dt| peak).
+2) Definition of a threshold as a percentile of |dV/dt|.
+3) Grouping of consecutive samples at or above the threshold into candidate events.
+4) Selection of the candidate event with the largest |dV/dt|.
 5) Export of a time-aligned window around that event.
 6) Optional generation of a vector figure (SVG/PDF) showing:
    - Vbus around the event
@@ -52,8 +55,8 @@ If --export-window-csv is enabled:
   - window.csv            (time-aligned window around the selected event)
 
 If --plot is enabled:
-  - event_window.svg
-  - event_window.pdf
+  - event_window_<dataset_id>.svg
+  - event_window_<dataset_id>.pdf
 
 Recommended main example (includes power trace)
 -----------------------------------------------
@@ -62,7 +65,7 @@ Recommended main example (includes power trace)
 python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id A \
     --percentile 99.9 \
-    --window-s 10 \
+    --window-s 60 \
     --related-cols auto \
     --export-window-csv \
     --plot
@@ -71,7 +74,7 @@ python3 -m scripts.examples.01_event_detection_dvdt \
 python3 -m scripts.examples.01_event_detection_dvdt \
     --dataset-id B \
     --percentile 99.9 \
-    --window-s 10 \
+    --window-s 60 \
     --related-cols auto \
     --export-window-csv \
     --plot

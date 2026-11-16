@@ -3,12 +3,12 @@ Script: 02_generate_latex_table_events.py
 
 Purpose
 -------
-Generate a LaTeX-ready table summarizing extreme |dV/dt| event statistics
+Generate a LaTeX-ready table summarizing candidate |dV/dt| event statistics
 for inclusion in the associated Data Descriptor manuscript.
 
 This script formats the output produced by:
 
-    python3 -m scripts.validation.03_event_counts_by_percentile --dataset-id <A|B|C>
+    python3 -m scripts.validation.03_event_characterization_dvdt --dataset-id <A|B|C>
 
 It does not recompute events. It only reads existing CSV results and writes:
 - A LaTeX table (.tex)
@@ -18,7 +18,7 @@ Inputs
 ------
 event_counts_by_percentile.csv files located under:
 
-    out/<DATASET_ID>/<RUN_ID>/events/stats/event_counts_by_percentile.csv
+    out/<DATASET_ID>/<RUN_ID>/events_dvdt/stats/event_counts_by_percentile.csv
 
 If --run-id is not provided, the script will auto-select the most recent run
 per dataset by scanning the filesystem.
@@ -50,7 +50,7 @@ python3 -m scripts.reporting.02_generate_latex_table_events \
 Notes
 -----
 - This script expects that Stage 03 has already been executed for each dataset.
-- The LaTeX table focuses on the most extreme percentiles by default (99.9, 99.95).
+- The LaTeX table includes the 99.9th and 99.95th percentiles by default.
 """
 
 import os
@@ -183,7 +183,7 @@ def main() -> None:
     parser.add_argument(
         "--caption",
         type=str,
-        default="Extreme |dV/dt| event statistics per dataset.",
+        default="Candidate |dV/dt| events per dataset.",
         help="LaTeX caption text.",
     )
 
@@ -249,7 +249,6 @@ def main() -> None:
     latex_lines: List[str] = []
     latex_lines.append(r"\begin{table}[htbp]")
     latex_lines.append(r"\centering")
-    #latex_lines.append(rf"\caption{{Extreme $|dV/dt|$ event statistics per dataset (recording duration: 24~h).}}")
     latex_lines.append(rf"\caption{{{args.caption}}}")
     latex_lines.append(rf"\label{{{args.label}}}")
     latex_lines.append(r"\begin{tabular}{lcccccc}")
