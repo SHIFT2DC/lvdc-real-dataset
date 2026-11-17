@@ -27,8 +27,8 @@ Output
 ------
     release/zenodo_examples/lvdc_dataset_example_scripts.zip
 
-The ZIP is reproducible: entries are written in a fixed order, with fixed permissions
-and with the commit date as file date, so the same commit gives the same ZIP.
+The package uses fixed file ordering, permissions and commit timestamps, and stores
+files without compression to reduce differences between build environments.
 
 Usage
 -----
@@ -146,8 +146,8 @@ def _add_entry(zf: zipfile.ZipFile, name: str, data: Optional[bytes], date_time:
         zf.writestr(info, b"")
     else:
         info.external_attr = 0o100644 << 16
-        info.compress_type = zipfile.ZIP_DEFLATED
-        zf.writestr(info, data, compresslevel=9)
+        info.compress_type = zipfile.ZIP_STORED
+        zf.writestr(info, data)
 
 
 def main() -> int:
