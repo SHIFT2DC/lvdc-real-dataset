@@ -1,8 +1,10 @@
-# Example: LVDC transient event detection
+# Example: candidate |dV/dt| events in LVDC Datasets A and B
 
-This example shows how voltage transient events can be detected in Datasets A and B using the |dV/dt| criterion. The script computes |dV/dt| of the DC bus voltage, selects the samples at or above a percentile threshold, groups contiguous samples into candidate events and plots a window around the event with the largest |dV/dt|.
+This example shows how candidate events can be selected in Datasets A and B with a percentile threshold on |dV/dt|. The script computes |dV/dt| of the DC bus voltage, selects the samples at or above the threshold, groups contiguous samples into candidate events and plots a window around the event with the largest |dV/dt|.
 
 With the command given below, the script reproduces the event window shown in Figure 5 of the associated Data Descriptor.
+
+The package is self-contained: it contains the code, the requirements, the configuration of Datasets A and B and an empty `data/raw/` folder. The CSV files are not included. They are published as separate files in the same Zenodo record and are placed in `data/raw/` before running the script (see Data).
 
 ## Contents
 
@@ -14,7 +16,7 @@ lvdc_dataset_example_scripts/
 ├── configs/
 │   └── datasets.yaml
 ├── data/
-│   └── raw/            (place the CSV files here)
+│   └── raw/            (empty; place the CSV files here)
 └── scripts/
     ├── common/
     │   └── io_config.py
@@ -65,10 +67,10 @@ The files are written to `out/A/fig5/examples/dvdt_event_example/`:
 - `window.csv`: samples in the 60 s window
 - `event_window_A.svg` and `event_window_A.pdf`: event window figure
 
-The selected event starts at 2025-05-02 15:19:14 and ends at 15:19:15, with a peak |dV/dt| of approximately 19.8 V/s. The dashed line in the figure marks the sample with the largest |dV/dt|, at 2025-05-02 15:19:15 (`event_peak_time` in `selected_event.json`), and the window spans 15:18:45 to 15:19:45.
+The selected candidate event starts at 2025-05-02 15:19:14 and ends at 15:19:15, with a peak |dV/dt| of approximately 19.8 V/s. The dashed line in the figure marks the sample with the largest |dV/dt|, at 2025-05-02 15:19:15 (`event_peak_time` in `selected_event.json`), and the window spans 15:18:45 to 15:19:45.
 
 The |dV/dt| value of a sample is computed from the change with respect to the previous sample. The values therefore describe changes at the sampling interval of the recording (approximately 1 s), not faster converter transients. The detected events are candidate events selected by a percentile threshold; they are not labelled or independently verified.
 
 ## Dataset B
 
-Replace `--dataset-id A` with `--dataset-id B`. The files are written to `out/B/fig5/examples/dvdt_event_example/`. The selected event is the sample at 2024-05-10 16:47:04, with a peak |dV/dt| of approximately 26.5 V/s, and the window spans 16:46:34 to 16:47:34.
+Replace `--dataset-id A` with `--dataset-id B`. The files are written to `out/B/fig5/examples/dvdt_event_example/`. The selected candidate event consists of one step ending at 2024-05-10 16:47:04, with a peak |dV/dt| of approximately 26.5 V/s, and the window spans 16:46:34 to 16:47:34.
