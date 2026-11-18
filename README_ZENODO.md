@@ -4,7 +4,7 @@
 
 This record contains a collection of real-world time-series datasets acquired from operational low-voltage direct current (LVDC) installations under normal industrial operating conditions. The datasets were collected within the context of the SHIFT2DC European project and reflect realistic voltage dynamics, load variations, and measurement noise that are typically not captured in simulation-based studies.
 
-The original recordings are provided in their original recorded form as time-stamped CSV files, without filtering, smoothing, resampling, or post-processing. For Dataset C, the record also includes a derived file with the columns in the order of the header (see below).
+The original recordings are provided as time-stamped CSV files, without filtering, smoothing, resampling, or post-processing. For Dataset C, the record also includes a derived file with the columns in the order of the header (see below).
 
 The dataset is intended to support research on LVDC monitoring, event detection, and data-driven analysis, as well as the validation of algorithms using real operational measurements.
 
