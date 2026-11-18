@@ -63,7 +63,7 @@ python3 -m scripts.preprocess.02_check_dataset_C_column_order
 
 The systemstate column has the value 3 in all data rows. The data provider listed the possible states as off, standby, connecting, on and tripped/failed, in this order, but did not give their numeric codes. If the list is numbered from zero, the value 3 would correspond to on.
 
-The file contains 12 rows in which the timestamp is followed only by the text CONNECTION_RESTORED. The meaning of these entries has not been documented by the data provider. They are preserved in the CSV file as recorded; the derived file in the code repository does not include them.
+The file contains 12 rows in which the timestamp is followed only by the text CONNECTION_RESTORED. The meaning of these entries has not been documented by the data provider. They are preserved in the CSV file as recorded; the derived file does not include them.
 
 Users may need to handle such entries explicitly during data parsing or preprocessing, depending on the intended analysis.
 
