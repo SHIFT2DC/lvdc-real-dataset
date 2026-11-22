@@ -7,7 +7,7 @@ Why this exists
 ---------------
 In Technical Validation we want to:
 - Show the empirical distribution of |dV/dt| derived from real timestamps.
-- Justify percentile-based thresholds used for simple transient detection.
+- Show the percentile thresholds used to select candidate events.
 - Compare Dataset A (battery off) and Dataset B (battery on), and optionally dataset C.
 
 Two plot modes are supported:

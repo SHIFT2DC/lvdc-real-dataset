@@ -4,7 +4,9 @@
 
 Purpose
 -------
-Detect representative DC-bus voltage transients using a simple |dV/dt| trigger.
+Select candidate events of the DC bus voltage with a threshold on |dV/dt|
+(a percentile of the recording by default). The candidate events are not
+labelled, classified or independently verified.
 This script is designed for Technical Validation (data quality and usability),
 not for machine learning performance.
 
@@ -13,7 +15,7 @@ Key outputs
 - dV/dt distribution statistics (percentiles and extremes)
 - Event counts per threshold (percentile-based and optional absolute threshold)
 - Event-level summary metrics (duration, peak |dV/dt|, delta V)
-- Top-N most severe events (for later plotting and paper figures)
+- Top-N candidate events with the largest peak |dV/dt| (for later plotting)
 - Optional extraction of aligned event windows (CSV)
 
 How to run
