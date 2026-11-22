@@ -15,7 +15,7 @@
        alt="LVDC system schematic overview">
 </p>
 
-Real-world time-series measurements from operational low-voltage direct current (LVDC) installations with hybrid AC/DC infrastructure. Data were logged through industrial monitoring interfaces and capture realistic voltage dynamics, measurement noise, and timing irregularities under normal operating conditions.
+Real-world time-series measurements from operational low-voltage direct current (LVDC) installations with hybrid AC/DC infrastructure. Data were logged through industrial monitoring interfaces and capture voltage dynamics, small changes between consecutive samples, value granularity and timing irregularities under normal operating conditions.
 
 > Curated as part of the [SHIFT2DC](https://www.shift2dc.eu) Horizon Europe project (Grant Agreement No. 101136131) and described in an accompanying Data Descriptor manuscript.
 
@@ -46,7 +46,7 @@ Signal descriptions, units, and acquisition context for each dataset are provide
 │   └── original_from_partners/     # Original files as received, preserved for traceability
 ├── metadata/                       # Signal descriptions, units, and acquisition context
 ├── scripts/
-│   ├── validation/                 # Reproducible validation pipeline (01–06)
+│   ├── validation/                 # Reproducible validation pipeline (01–07)
 │   ├── reporting/                  # Figure and table generation scripts
 │   ├── examples/                   # Standalone example scripts
 │   ├── preprocess/                 # Dataset C alignment script and independent check
@@ -117,7 +117,7 @@ All validation results are reproducible via `scripts/validation/` using `run_all
 
 - Analysis of LVDC voltage dynamics and event characterisation at the monitoring timescale (1 s)
 - Development and benchmarking of event detection methods based on voltage and derived signals (e.g. dV/dt)
-- Validation of data-driven models under realistic measurement noise and sampling irregularities
+- Testing data-driven models on real recordings with sampling irregularities and value granularity
 - Comparison of recordings with the battery off and on, taking into account the different recording dates and power conditions
 
 ---

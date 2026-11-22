@@ -87,7 +87,7 @@ The signals `Nachladung P` and `Nachladung I` are interpreted as the active powe
 
 ## Data quality and limitations
 
-The dataset reflects real industrial measurements and includes the natural noise, small timing irregularities, and variability expected in operational environments. No explicit data cleaning or validation beyond basic integrity checks has been applied.
+The dataset reflects real industrial measurements and includes small changes between consecutive samples, timing irregularities and variability recorded during normal operation. The original recordings are preserved without cleaning, filtering, resampling or interpolation. Reproducible checks and descriptive analyses are provided in the code repository.
 
 Signal descriptions are based on variable naming conventions, observed value ranges, and contextual information provided with the dataset. The detailed internal semantics of selected diagnostic or status indicators may depend on the specific implementation of the industrial monitoring system.
 

@@ -20,7 +20,7 @@ All measurements reflect normal operation of the installation and were not obtai
 
 The dataset is provided as a single comma-separated values (CSV) file containing time-stamped measurements. Timestamps are expressed in a human-readable format (YYYY-MM-DD HH:MM:SS). The time zone and the clock source of the logging device have not been documented by the data provider.
 
-The nominal sampling interval is approximately 1 second, with minor timing variations typical of industrial logging systems. No temporal resampling or interpolation has been applied.
+The nominal sampling interval is 1 second: 86397 of the 86398 intervals between consecutive rows are 1 s long, and the remaining one is 2 s long because the row at 00:00:01 is absent. No temporal resampling or interpolation has been applied.
 
 The dataset is provided in its original recorded form, without filtering, smoothing, or post-processing.
 
@@ -85,7 +85,7 @@ The signals `Nachladung P` and `Nachladung I` were originally labelled as batter
 
 ## Data quality and limitations
 
-The dataset reflects real industrial measurements and includes the natural noise, small timing irregularities, and variability expected in operational environments. No explicit data cleaning or validation beyond basic integrity checks has been applied.
+The dataset reflects real industrial measurements and includes small changes between consecutive samples, timing irregularities and variability recorded during normal operation. The original recordings are preserved without cleaning, filtering, resampling or interpolation. Reproducible checks and descriptive analyses are provided in the code repository.
 
 Signal descriptions are based on variable naming conventions, observed value ranges, and contextual information provided with the dataset. The detailed internal semantics of selected diagnostic or status indicators may depend on the specific implementation of the industrial monitoring system.
 

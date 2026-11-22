@@ -20,7 +20,7 @@ All measurements reflect operational system behaviour and were not obtained thro
 
 The dataset is provided as a single comma-separated values (CSV) file containing time-stamped measurements. Timestamps are expressed in a human-readable format with millisecond resolution. The time zone and the clock source of the logging device have not been documented by the data provider.
 
-The nominal sampling interval is approximately 1 second, with small timing variations typical of industrial logging systems. The recording contains four gaps longer than 1 h, totalling 14.21 h; data are available for 33.57 h of the 47.78 h span. No temporal resampling or interpolation has been applied.
+The median sampling interval is 1 second, with 5th and 95th percentiles of 0.992 and 1.007 s. Four intervals last between 3.1 and 9.9 s. The recording contains four gaps longer than 1 h, totalling 14.21 h; data are available for 33.57 h of the 47.78 h span. No temporal resampling or interpolation has been applied.
 
 The CSV file is provided in its original recorded form, without filtering, smoothing, or post-processing. A derived file with all data rows in the column order of the header is described in the section Column order.
 
@@ -69,7 +69,7 @@ Users may need to handle such entries explicitly during data parsing or preproce
 
 ## Data quality and limitations
 
-The dataset reflects real industrial measurements and includes the natural noise, timing irregularities, and logging artefacts expected in operational environments.
+The dataset reflects real industrial measurements and includes small changes between consecutive samples, timing irregularities and the logging features described in this file.
 
 Signal descriptions are based on column names, observed value ranges, and information from the data provider (logging at the SCCB next to the AFE).
 

@@ -28,16 +28,17 @@
 # 4) validation/04_cross_signal_consistency.py
 #    and validation/06_timestamp_handling_sensitivity.py (CSR with and without dt = 0 steps)
 # 5) validation/05_data_overview_summary.py
-# 6) reporting/01_plot_dvdt_distribution.py
-# 7) reporting/02_generate_latex_table_events.py
-# 8) reporting/04_generate_dataset_overview_figures.py
+# 6) validation/07_signal_changes_autocorrelation.py (Datasets A and B)
+# 7) reporting/01_plot_dvdt_distribution.py
+# 8) reporting/02_generate_latex_table_events.py
+# 9) reporting/04_generate_dataset_overview_figures.py
 #    and reporting/05_compose_dataset_overview_AB.py (Figure 3, Datasets A and B)
-# 9) examples/01_event_detection_dvdt.py
+# 10) examples/01_event_detection_dvdt.py
 #
 # Notes
 # -----
 # - The example script scripts/examples/01_event_detection_dvdt.py is not part
-#   of the core validation pipeline. It runs as the last stage (9) and
+#   of the core validation pipeline. It runs as the last stage (10) and
 #   writes the example outputs for Datasets A and B.
 # - This script should be executed from the repository root.
 # - It assumes the individual stage scripts are already working when called
@@ -88,7 +89,7 @@ echo
 # Basic sanity checks for structure, timestamps, missingness, and ranges.
 # Reuses the shared RUN_ID so all dataset-level outputs stay grouped.
 # ---------------------------------------------------------------------------
-echo "[1/9] Running validation stage 01: sanity checks"
+echo "[1/10] Running validation stage 01: sanity checks"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.01_sanity_checks \
@@ -102,7 +103,7 @@ echo
 # Sampling stability and delta-t behavior for the same main datasets.
 # This stage provides the timing validation context for later event analysis.
 # ---------------------------------------------------------------------------
-echo "[2/9] Running validation stage 02: sampling stability"
+echo "[2/10] Running validation stage 02: sampling stability"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.02_sampling_stability_dt \
@@ -115,7 +116,7 @@ echo
 # dV/dt event characterization for the main paper datasets (A/B).
 # This stage produces percentiles, event counts, and event-level artifacts.
 # ---------------------------------------------------------------------------
-echo "[3/9] Running validation stage 03: event characterization by dV/dt"
+echo "[3/10] Running validation stage 03: event characterization by dV/dt"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.03_event_characterization_dvdt \
@@ -131,7 +132,7 @@ echo
 # It also runs the sensitivity check of the CSR to the steps with dt = 0
 # (repeated timestamps in Dataset B), for Datasets A and B only.
 # ---------------------------------------------------------------------------
-echo "[4/9] Running validation stage 04: cross-signal consistency"
+echo "[4/10] Running validation stage 04: cross-signal consistency"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.validation.04_cross_signal_consistency \
@@ -155,7 +156,7 @@ echo
 # Compact validation summary that consolidates Stage 03 and Stage 04 results.
 # We pass the same Stage 03 / Stage 04 run ids explicitly to avoid ambiguity.
 # ---------------------------------------------------------------------------
-echo "[5/9] Running validation stage 05: compact validation summary"
+echo "[5/10] Running validation stage 05: compact validation summary"
 python3 -m scripts.validation.05_data_overview_summary \
   --datasets $DATASETS \
   --events-run-id "$RUN_ID" \
@@ -165,11 +166,29 @@ python3 -m scripts.validation.05_data_overview_summary \
 echo
 
 # ---------------------------------------------------------------------------
+# Stage 07
+# Changes between consecutive recorded values (all variables) and autocorrelation
+# of the DC bus voltage and the K1, K4 and K6 branch powers, for Datasets A and B.
+# The CSV files and the row order are kept; lags are counted in rows.
+# ---------------------------------------------------------------------------
+echo "[6/10] Running validation stage 07: signal changes and autocorrelation"
+for DS in $DATASETS; do
+  if [ "$DS" = "A" ] || [ "$DS" = "B" ]; then
+    echo "  -> Dataset $DS"
+    python3 -m scripts.validation.07_signal_changes_autocorrelation \
+      --dataset-id "$DS" \
+      --run-id "$RUN_ID"
+  fi
+done
+
+echo
+
+# ---------------------------------------------------------------------------
 # Reporting 01
 # Main paper-ready stacked CCDF figure for |dV/dt| in datasets A and B.
 # This call follows the script recommended settings for the manuscript.
 # ---------------------------------------------------------------------------
-echo "[6/9] Running reporting stage 01: dV/dt tail distribution figure"
+echo "[7/10] Running reporting stage 01: dV/dt tail distribution figure"
 python3 -m scripts.reporting.01_plot_dvdt_distribution \
   --datasets $DATASETS \
   --run-id "$RUN_ID" \
@@ -192,7 +211,7 @@ echo
 # Caption and label are passed explicitly for consistent manuscript output.
 # This stage reads the Stage 03 outputs identified by the shared RUN_ID.
 # ---------------------------------------------------------------------------
-echo "[7/9] Running reporting stage 02: LaTeX event table"
+echo "[8/10] Running reporting stage 02: LaTeX event table"
 python3 -m scripts.reporting.02_generate_latex_table_events \
   --datasets $DATASETS \
   --run-id "$RUN_ID" \
@@ -209,7 +228,7 @@ echo
 # - variable-category distribution figures
 # - combined raw signal figure for Datasets A and B (raw_signals_AB.pdf)
 # ---------------------------------------------------------------------------
-echo "[8/9] Running reporting stage 04: dataset overview figures"
+echo "[9/10] Running reporting stage 04: dataset overview figures"
 
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
@@ -260,7 +279,7 @@ fi
 echo
 
 # ---------------------------------------------------------------------------
-# Stage 09
+# Stage 10
 # Reproducible example of event detection and aligned window export.
 # This demonstrates practical dataset usage on the main paper datasets.
 # For each dataset, this stage generates:
@@ -269,7 +288,7 @@ echo
 # - window.csv
 # - vector figure (SVG/PDF)
 # ---------------------------------------------------------------------------
-echo "[9/9] Running examples stage 01: event detection example"
+echo "[10/10] Running examples stage 01: event detection example"
 for DS in $DATASETS; do
   echo "  -> Dataset $DS"
   python3 -m scripts.examples.01_event_detection_dvdt \
