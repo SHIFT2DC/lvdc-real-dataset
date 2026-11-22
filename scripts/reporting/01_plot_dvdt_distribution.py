@@ -387,8 +387,8 @@ def main() -> None:
             style_p = percentile_style.get(p, {})
 
             # Visual hierarchy:
-            # p99.95 = main extreme threshold (thicker)
-            # p99.9  = secondary extreme threshold (thinner)
+            # p99.95 = thicker line
+            # p99.9  = thinner line
             if p == 99.95:
                 lw = float(args.marker_line_width) + 0.6
                 alpha_val = 1.0
