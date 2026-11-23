@@ -64,15 +64,19 @@ Pipeline outputs are written locally to:
 
 ```
 out/
-├── A/
-│   └── YYYY-MM-DD_HHMMZ_<git_hash>/
-├── B/
-│   └── YYYY-MM-DD_HHMMZ_<git_hash>/
-├── C/
-│   └── YYYY-MM-DD_HHMMZ_<git_hash>/
+├── <DATASET>/          # A and B by default (DATASETS variable of run_all.sh)
+│   └── <RUN_ID>/
 └── reporting/
-    └── YYYY-MM-DD_HHMMZ_<git_hash>/
+    └── <RUN_ID>/
 ```
+
+`run_all.sh` uses a single `RUN_ID` for all the stages of a run. By default it is the UTC date and time at the start of the run (`YYYY-MM-DD_HHMMZ`). A custom identifier can be given when the pipeline is started:
+
+```bash
+RUN_ID="2026-11-23_1200Z_my_check" bash run_all.sh
+```
+
+When a script is run on its own without `--run-id`, it creates its own identifier; the format depends on the script (most validation scripts use `YYYY-MM-DD_HHMMZ_<git_hash>`).
 
 ---
 
@@ -109,7 +113,7 @@ See `scripts/examples/README_examples.md` for additional usage details.
 | **B** | 1,440 duplicated timestamps (1.67%): in every minute, second :53 is missing and second :54 appears twice, and the two rows of each pair are not identical. Temporal sequence remains monotonic. |
 | **C** | The raw CSV contains 12 CONNECTION_RESTORED entries. In the data rows after the second one (file line 17), the values do not follow the column order of the header; the order is determined from the data, using the relation between power, voltage and current. `scripts/preprocess/01_fix_dataset_C_alignment.py` writes a derived file with the header order to `data/processed/`, and `scripts/preprocess/02_check_dataset_C_column_order.py` checks it independently. The raw file is not modified. Details are given in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`. |
 
-All validation results are reproducible via `scripts/validation/` using `run_all.sh`.
+The validation and reporting pipeline for Datasets A and B is run with `run_all.sh`. The preprocessing and independent checks for Dataset C are run separately using the commands in `metadata/Dataset_C_LVDC_700V_AFE_complementary.md`.
 
 ---
 
