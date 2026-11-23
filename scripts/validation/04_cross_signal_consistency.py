@@ -6,27 +6,28 @@ Cross-signal consistency validation (Scientific Data - Technical Validation).
 
 Purpose
 -------
-This script performs physics-informed consistency checks to verify that the main
-signals within each dataset are mutually coherent. The goal is data quality validation,
-not model performance.
+This script computes descriptive indicators of the relation between the DC bus
+voltage (Vbus) and the power of a converter branch (P) in each dataset. They
+describe the recorded signals as part of the technical validation of the data;
+they do not validate the physical behaviour of the system and do not evaluate
+any detection or prioritization method.
 
-Why these metrics
------------------
-We use three lightweight indicators that are easy to reproduce and robust in real
-industrial recordings:
-
-1) Spearman correlation between DC bus voltage (Vbus) and power (P).
-   - Spearman is rank-based and therefore less sensitive to non-linear behavior and
-     outliers than a purely linear metric.
+Indicators
+----------
+1) Spearman correlation between Vbus and P.
+   - Rank-based, with average ranks for tied values; it measures a monotonic
+     association without assuming a linear relation.
 
 2) Spearman correlation between |dV/dt| and |ΔP|.
-   - Voltage transients are expected to be associated with rapid changes in power,
-     supporting event-driven monitoring use cases.
+   - Computed over the steps with Δt > 0 and written to the output files.
+     It is not reported in the article.
 
-3) Coherent sign ratio between ΔV and ΔP on salient steps.
-   - In load-driven conditions, increases in power demand (ΔP > 0) often coincide with
-     decreases in Vbus (ΔV < 0). We quantify how frequently this relationship holds
-     without assuming it is always true.
+3) Coherent sign ratio between ΔV and ΔP.
+   - Fraction of the selected steps in which ΔV and ΔP have opposite signs.
+     A step is selected when both |ΔV| and |ΔP| are at or above their
+     percentile thresholds (95th by default), computed over all steps in the
+     order of the file. The sign convention of the recorded power is not
+     documented, so no sign relation is assumed.
 
 Inputs
 ------
@@ -62,7 +63,7 @@ Notes
 -----
 - This script does not resample or filter signals.
 - Minimal cleaning is applied: invalid timestamps and NaN in required columns are removed.
-- Results are intended as consistency indicators, not causal estimates.
+- The indicators are descriptive and are not used to infer causal relations.
 """
 
 from __future__ import annotations
@@ -152,8 +153,8 @@ def _coherent_sign_ratio(dV: pd.Series, dP: pd.Series, dv_pctl: float, dp_pctl: 
     """
     Coherent sign ratio on salient steps.
 
-    We restrict the computation to samples where both |ΔV| and |ΔP| are above percentile
-    thresholds to avoid counting noise-level variations.
+    The ratio is computed on the steps where both |ΔV| and |ΔP| are at or above
+    their percentile thresholds, that is, on the largest recorded steps.
 
     Coherent rule:
       sign(ΔV) == -sign(ΔP)
@@ -318,7 +319,7 @@ def main() -> None:
     power_sum_name = cfg.get("power_sum_name", "NRE_sum")
 
     # Deterministic choice of power column for this paper:
-    # - A/B: NRE K1 P1 (total power)
+    # - A/B: NRE K1 P1 (main power signal used in the article)
     # - C: poweroutput
     power_col = cfg.get("power_col", None)
     if power_col is None:
